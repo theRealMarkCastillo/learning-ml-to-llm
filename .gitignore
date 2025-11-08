@@ -1,0 +1,54 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Data files (large datasets)
+data/raw/*.csv
+data/raw/*.txt
+data/raw/*.json
+!data/raw/.gitkeep
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+models/saved/
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.venv
+
+# MLX specific
+*.safetensors
+*.npz
