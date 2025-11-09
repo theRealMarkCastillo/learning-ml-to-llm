@@ -112,6 +112,68 @@ By completing this journey, you'll deeply understand:
 
 ## ⚡ Quick Start
 
+### No Hard-Coded Paths
+All notebooks now resolve the repository root dynamically instead of using a user-specific absolute path like `/Users/mark/git/learning-ml-to-llm`. Use either the inline helper pattern:
+
+```python
+import sys, pathlib
+def add_repo_root(markers=("requirements.txt","README.md",".git")):
+    here = pathlib.Path.cwd().resolve()
+    for candidate in [here] + list(here.parents):
+        if any((candidate / m).exists() for m in markers):
+            if str(candidate) not in sys.path:
+                sys.path.insert(0, str(candidate))
+            break
+add_repo_root()
+```
+
+Or reuse the utility:
+
+```python
+from utils.path_helpers import add_repo_root_to_sys_path
+add_repo_root_to_sys_path()
+```
+
+After this, relative imports like `from utils import metrics` work from any project subfolder without editing paths.
+
+### Automatic Device Selection (GPU / MPS / MLX / CPU)
+The repository now includes unified backend auto-detection via `utils.device`.
+
+Priority order:
+1. MLX (Apple Silicon) if available (`import mlx.core as mx`).
+2. PyTorch CUDA if `torch.cuda.is_available()`.
+3. PyTorch MPS if `torch.backends.mps.is_available()`.
+4. CPU fallback (torch CPU or pure Python).
+
+Usage in notebooks (already inserted in Phase 2 & 3 transformer notebooks):
+```python
+from utils.device import get_device, backend_info, tensor, ensure_seed
+print("Using backend:", backend_info())
+ensure_seed(42)
+
+# Create a tensor on the active backend
+x = tensor([[1.0, 2.0], [3.0, 4.0]])
+```
+
+Override backend manually:
+```bash
+export LEARNING_ML_BACKEND=cpu   # options: mlx | cuda | mps | cpu
+python scripts/verify_device.py
+```
+
+Quick verification script:
+```bash
+python scripts/verify_device.py
+```
+This prints the chosen backend and runs a tiny matmul to confirm functionality.
+
+Why this matters:
+- Seamless cross-platform execution (Apple Silicon MLX, Linux CUDA, macOS MPS).
+- Single import path for device logic keeps notebooks clean.
+- Consistent seeding across random, NumPy, torch, and MLX for reproducibility.
+
+See `utils/device.py` for details and helper functions (`backend_name`, `move_to`).
+
 ### Prerequisites
 
 - **Python 3.8+** installed

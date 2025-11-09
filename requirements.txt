@@ -16,9 +16,13 @@ ipykernel>=6.25.0
 ipywidgets>=8.0.0
 
 # Deep Learning
+# PyTorch is the default backend across platforms
 torch>=2.0.0
-mlx>=0.0.5
-mlx-lm>=0.0.5
+
+# Apple Silicon MLX backend (macOS only)
+# NOTE: Install these only on macOS arm64. The setup script handles this automatically.
+# mlx>=0.0.5
+# mlx-lm>=0.0.5
 
 # Development Tools
 ipython>=8.14.0

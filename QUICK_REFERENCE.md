@@ -79,7 +79,7 @@
 
 ### Option 1: Automated Setup (Recommended)
 ```bash
-cd /Users/mark/git/learning-ml-to-llm
+cd ~/git/learning-ml-to-llm
 ./scripts/setup_environment.sh
 source venv/bin/activate
 jupyter notebook
@@ -87,7 +87,7 @@ jupyter notebook
 
 ### Option 2: Manual Setup
 ```bash
-cd /Users/mark/git/learning-ml-to-llm
+cd ~/git/learning-ml-to-llm
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -204,7 +204,12 @@ from utils.metrics import mean_squared_error, accuracy, f1_score
 ### Can't import utils?
 ```python
 import sys
-sys.path.append('/Users/mark/git/learning-ml-to-llm')
+from pathlib import Path, PurePath
+import sys
+root = Path(__file__).resolve().parent
+while root.parent != root and not any((root / m).exists() for m in ("README.md","requirements.txt",".git")):
+   root = root.parent
+sys.path.append(str(root))
 from utils.visualization import plot_loss_curve
 ```
 
@@ -223,6 +228,15 @@ rm -rf venv
 ```bash
 ./scripts/verify_repo.sh
 ```
+
+### Verify device backend (GPU/MPS/CPU)
+```bash
+python scripts/verify_device.py
+
+# Optional override
+LEARNING_ML_BACKEND=cpu python scripts/verify_device.py
+```
+If you're on Apple Silicon and have MLX installed, you'll see `Backend=MLX ...`. On Linux with NVIDIA, `torch_cuda`. On Intel/macOS without GPU, it falls back to CPU.
 
 ---
 

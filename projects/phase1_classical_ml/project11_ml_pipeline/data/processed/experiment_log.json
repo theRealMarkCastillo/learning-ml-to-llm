@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-11-08T17:03:45.065032",
+  "dataset": "Adult Income",
+  "samples": {
+    "total": 48842,
+    "train": 39073,
+    "test": 9769
+  },
+  "features": {
+    "numeric": [
+      "age",
+      "fnlwgt",
+      "education-num",
+      "capital-gain",
+      "capital-loss",
+      "hours-per-week"
+    ],
+    "categorical": [
+      "workclass",
+      "education",
+      "marital-status",
+      "occupation",
+      "relationship",
+      "race",
+      "sex",
+      "native-country"
+    ],
+    "total_after_encoding": 105
+  },
+  "preprocessing": {
+    "numeric": "SimpleImputer(median) + StandardScaler",
+    "categorical": "SimpleImputer(most_frequent) + OneHotEncoder"
+  },
+  "best_model": "RandomForestClassifier",
+  "best_params": {
+    "classifier__n_estimators": 200,
+    "classifier__min_samples_split": 2,
+    "classifier__min_samples_leaf": 2,
+    "classifier__max_features": "sqrt",
+    "classifier__max_depth": null
+  },
+  "cv_score": 0.6822009215512029,
+  "test_metrics": {
+    "accuracy": 0.8662094380182209,
+    "precision": 0.7787993510005409,
+    "recall": 0.6159110350727117,
+    "f1": 0.6878433245760688,
+    "roc_auc": 0.9181189498274344
+  }
+}

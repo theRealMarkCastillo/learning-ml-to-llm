@@ -16,7 +16,7 @@ which python3
 **Create Dedicated Virtual Environment:**
 ```bash
 # Navigate to your project directory
-cd /Users/mark/git/learning-ml-to-llm
+cd ~/git/learning-ml-to-llm
 
 # Create virtual environment
 python3 -m venv venv
@@ -30,7 +30,7 @@ pip install --upgrade pip
 
 **Add to your `.zshrc` for easy activation:**
 ```bash
-echo 'alias mlenv="cd /Users/mark/git/learning-ml-to-llm && source venv/bin/activate"' >> ~/.zshrc
+echo 'alias mlenv="cd ~/git/learning-ml-to-llm && source venv/bin/activate"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
@@ -468,7 +468,7 @@ This learning path positions you to do rigorous AI safety research with deep tec
 
 Run this command to get started:
 ```bash
-cd /Users/mark/git/learning-ml-to-llm
+cd ~/git/learning-ml-to-llm
 python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
