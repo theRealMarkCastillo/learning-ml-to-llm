@@ -1,0 +1,4 @@
+{"instruction": "Summarize: LoRA is a method for parameter-efficient fine-tuning.", "output": "LoRA fine-tunes large models by training small low-rank adapters while freezing original weights."}
+{"instruction": "Write a function: factorial in Python.", "output": "def factorial(n):\n    return 1 if n<=1 else n*factorial(n-1)"}
+{"instruction": "Give three bullet tips for learning ML.", "output": "- Start with linear models\n- Practice on small datasets\n- Read research and implement"}
+{"instruction": "Fix bug: reverse a list in Python.", "output": "def reverse_list(xs):\n    return xs[::-1]"}

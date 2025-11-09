@@ -11,6 +11,18 @@ __pycache__/
 dist/
 build/
 
+# Python tooling/cache
+.python-version
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.pylint.d/
+.tox/
+.nox/
+.coverage
+coverage.xml
+htmlcov/
+
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb_checkpoints
@@ -28,11 +40,12 @@ build/
 .LSOverride
 ._*
 
-# Data files (large datasets)
-data/raw/*.csv
-data/raw/*.txt
-data/raw/*.json
+# Data and intermediate artifacts
+data/raw/**
 !data/raw/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+datasets/**
 
 # Model checkpoints
 *.pt
@@ -41,14 +54,44 @@ data/raw/*.json
 checkpoints/
 models/saved/
 
+# Project artifacts and analysis outputs
+artifacts/
+projects/**/artifacts/
+projects/**/analysis_artifacts/
+**/analysis_artifacts/
+**/training_log.csv
+**/training_log.tsv
+**/training_log.json
+**/metrics.json
+**/*.tfevents*
+
 # Logs
 *.log
 logs/
+wandb/
+runs/
+lightning_logs/
+mlruns/
+tb_logs/
+tensorboard/
 
 # Environment
 .env
 .venv
+.env.local
+.env.*.local
 
 # MLX specific
 *.safetensors
 *.npz
+
+# Caches
+.cache/
+**/.cache/
+hf_cache/
+**/hf_cache/
+.huggingface/
+
+# OS/Editor extras
+Thumbs.db
+ehthumbs.db
