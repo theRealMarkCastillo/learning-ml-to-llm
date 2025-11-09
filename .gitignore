@@ -26,6 +26,8 @@ htmlcov/
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb_checkpoints
+*.ipynb~
+.ipykernel_launcher.py
 
 # IDE
 .vscode/
@@ -33,6 +35,7 @@ htmlcov/
 *.swp
 *.swo
 *~
+*.code-workspace
 
 # macOS
 .DS_Store
@@ -45,25 +48,45 @@ data/raw/**
 !data/raw/.gitkeep
 data/processed/**
 !data/processed/.gitkeep
-datasets/**
+datasets/
 
-# Model checkpoints
+# Project-specific data files (processed, analysis, artifacts)
+projects/**/data/processed/
+projects/**/data/raw/
+projects/**/artifacts/
+projects/**/analysis_artifacts/
+
+# Model checkpoints and serialized objects
 *.pt
 *.pth
 *.ckpt
+*.pkl
+*.pickle
+*.joblib
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.safetensors
 checkpoints/
 models/saved/
 
-# Project artifacts and analysis outputs
-artifacts/
-projects/**/artifacts/
-projects/**/analysis_artifacts/
-**/analysis_artifacts/
+# Training logs and metrics
 **/training_log.csv
 **/training_log.tsv
 **/training_log.json
+**/training_log.txt
 **/metrics.json
 **/*.tfevents*
+
+# Analysis outputs
+*comparison*.csv
+*comparison*.json
+*gridsearch*.csv
+*sweep*.csv
+*results*.csv
+*analysis*.csv
+*metrics*.csv
 
 # Logs
 *.log
@@ -81,9 +104,7 @@ tensorboard/
 .env.local
 .env.*.local
 
-# MLX specific
-*.safetensors
-*.npz
+# MLX specific (safetensors already covered above)
 
 # Caches
 .cache/

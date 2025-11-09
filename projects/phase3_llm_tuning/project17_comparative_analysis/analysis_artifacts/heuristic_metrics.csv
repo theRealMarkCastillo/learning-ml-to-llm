@@ -1,6 +1,0 @@
-id,prompt,base_len,tuned_len,base_keyword_coverage,tuned_keyword_coverage,len_delta,coverage_delta
-1,Explain LoRA in one paragraph.,2,2,0.0,0.0,0,0.0
-2,Write a Python function to compute Fibonacci numbers.,2,2,0.0,0.0,0,0.0
-3,Give three bullet tips for learning ML.,2,2,0.0,0.0,0,0.0
-4,Summarize the benefits of parameter-efficient fine-tuning.,2,2,0.0,0.0,0,0.0
-5,What are common failure modes when instruction-tuning LLMs?,2,2,0.0,0.0,0,0.0

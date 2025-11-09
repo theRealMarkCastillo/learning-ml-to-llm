@@ -1,7 +1,0 @@
-{
-  "avg_len_delta": 0.0,
-  "avg_cov_delta": 0.0,
-  "prompts": 5,
-  "quick_mode": true,
-  "tuned_kind": "quick_mode_skipped_load"
-}
