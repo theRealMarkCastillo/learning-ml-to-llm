@@ -67,10 +67,10 @@ By completing this journey, you'll deeply understand:
 
 ## Learning Path
 
-### Phase 1: Classical ML Foundation (Weeks 1-12)
+### Phase 1: Classical ML Foundation (Weeks 1-14)
 **Goal**: Master fundamental ML concepts before approaching deep learning
 
-**Projects**:
+**Projects 1-11**: Core foundations
 - Linear & Logistic Regression from scratch
 - Multi-class classification with softmax
 - Regularization and overfitting
@@ -81,20 +81,28 @@ By completing this journey, you'll deeply understand:
 - Feature engineering
 - End-to-end ML pipeline
 
-**Key Learning**: Gradient descent, loss functions, generalization, proper evaluation
+**Bridge Projects** (prepare for transformers):
+- 11.5: Neural Networks from scratch (backprop, depth vs width)
+- 11.75: RNNs from scratch (BPTT, vanishing gradients, why transformers are better)
+
+**Key Learning**: Gradient descent, loss functions, generalization, proper evaluation, deep learning intuition, sequence modeling
 
 [→ Phase 1 Details](projects/phase1_classical_ml/README.md)
 
-### Phase 2: Transformers & Pretraining (Weeks 13-17)
+### Phase 2: Transformers & Pretraining (Weeks 13-20)
 **Goal**: Build and pretrain a transformer to understand base models
 
-**Projects**:
+**Bridge Projects** (build intuition before assembly):
+- 12.1: Attention Mechanisms from scratch
+- 12.25: Embeddings & representation learning via skip-gram
+
+**Core Projects**:
 - Build transformer architecture from scratch
 - Tokenization and text preprocessing
 - **Pretrain tiny transformer on Shakespeare** (4-12 hours on M4)
 - Analyze pretrained vs random models
 
-**Key Learning**: Self-attention, pretraining dynamics, why base models work
+**Key Learning**: Self-attention, multi-head attention, embeddings, pretraining dynamics, why base models work
 
 [→ Phase 2 Details](projects/phase2_transformers/README.md)
 

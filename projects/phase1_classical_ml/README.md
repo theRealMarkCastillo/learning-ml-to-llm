@@ -22,6 +22,21 @@ Build foundational ML concepts from first principles before moving to deep learn
 - **Project 10**: Feature Engineering - Scaling, polynomial features
 - **Project 11**: End-to-End Pipeline - Complete ML workflow
 
+### Project 11.5: Bridge to Deep Learning ⭐
+- **Project 11.5**: Neural Networks from Scratch - Backpropagation, depth vs width, why deep learning works
+  - Implements a 2-3 layer MLP from NumPy
+  - Derives and codes backpropagation
+  - Compares to logistic regression on non-linear data
+  - Prepares intuition before building transformers
+
+### Project 11.75: Bridge to Sequences ⭐
+- **Project 11.75**: Recurrent Neural Networks from Scratch - BPTT, vanishing gradients
+  - Implements vanilla RNN with full backpropagation through time
+  - Character-level language modeling on Shakespeare
+  - Analyzes gradient flow: eigenvalue analysis of Whh matrix
+  - Demonstrates why transformers with attention solve recurrence problem
+  - Intuition for sequence modeling before full transformer
+
 ## Learning Outcomes
 - Deep understanding of optimization and gradient descent
 - Mastery of loss functions and regularization

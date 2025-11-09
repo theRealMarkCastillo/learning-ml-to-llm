@@ -3,7 +3,25 @@
 ## Overview
 Build and pretrain a tiny transformer to understand what happens inside base models.
 
-## Projects (Weeks 13-17)
+## Bridge Projects (Prerequisites)
+
+### Project 12.1: Attention Mechanisms ⭐
+Isolate attention mechanism before full transformer:
+- Scaled dot-product attention (Attention(Q,K,V) = softmax(QK^T/√d_k)V)
+- Multi-head attention with parallel heads
+- Causal masking for autoregressive generation
+- Visualize attention weights to understand learned patterns
+- Why attention has better gradient flow than RNNs
+
+### Project 12.25: Embeddings & Representation Learning ⭐
+Learn word/token embeddings via Word2Vec skip-gram:
+- Skip-gram loss: predict context from target word
+- Character-level embeddings on Shakespeare
+- Visualization of learned semantic space (PCA 2D)
+- Connection to transformer token embeddings
+- Why embeddings are learned, not fixed one-hot
+
+## Main Projects (Weeks 13-17)
 
 ### Project 12: Transformer Architecture (Week 13-14)
 Build decoder-only transformer from scratch:
