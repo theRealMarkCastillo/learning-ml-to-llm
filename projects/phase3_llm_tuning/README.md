@@ -1,19 +1,19 @@
 # Phase 3: LLM Fine-tuning
 
 ## Overview
-Fine-tune Mistral 7B and analyze how instruction tuning changes model behavior.
+Fine-tune Qwen 1.5B and analyze how instruction tuning changes model behavior.
 
 ## Projects (Weeks 18-23)
 
-### Project 16: Mistral Instruction Tuning (Week 18-21)
-Fine-tune real Mistral 7B using MLX:
+### Project 16: Qwen Instruction Tuning (Week 18-21)
+Fine-tune Qwen 2.5 1.5B Instruct using MLX:
 - LoRA parameter-efficient fine-tuning
 - Instruction dataset preparation
 - Training loop for production model
 - Before/after evaluation
-- **Memory**: ~20-30GB on your M4
-- **Time**: Hours per training run
-- ✨ Enhanced: Comprehensive intro covering LoRA mechanics, quantization, and economics; exercises on rank sensitivity and domain specialization
+- **Memory**: ~4-6GB on your M4
+- **Time**: Minutes per training run
+- ✨ Enhanced: Comprehensive intro covering LoRA mechanics and economics; exercises on rank sensitivity and domain specialization
 
 ### Project 17: Comparative Analysis (Week 22-23)
 Systematic comparison of base vs tuned:
@@ -33,8 +33,8 @@ Systematic comparison of base vs tuned:
 
 ## Hardware Requirements
 - M4 Mac with 64GB RAM: ✓ Perfect
-- Memory usage: ~20-30GB peak
-- Training time: Hours per run
+- Memory usage: ~4-6GB peak
+- Training time: Minutes per run
 - MLX optimized for Apple silicon
 
 ## Connection to Research

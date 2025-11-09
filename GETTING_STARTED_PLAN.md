@@ -65,7 +65,7 @@ mkdir -p projects/phase1_classical_ml/{project01_linear_regression,project02_log
 mkdir -p projects/phase1_classical_ml/{project05_decision_trees,project06_random_forests,project07_classification_metrics}
 mkdir -p projects/phase1_classical_ml/{project08_cross_validation,project09_svm,project10_feature_engineering,project11_ml_pipeline}
 mkdir -p projects/phase2_transformers/{project12_transformer_architecture,project13_tokenization,project14_pretraining,project15_analysis}
-mkdir -p projects/phase3_llm_tuning/{project16_mistral_tuning,project17_comparative_analysis}
+mkdir -p projects/phase3_llm_tuning/{project16_qwen_tuning,project17_comparative_analysis}
 mkdir -p data/{raw,processed}
 mkdir -p notebooks
 mkdir -p utils
