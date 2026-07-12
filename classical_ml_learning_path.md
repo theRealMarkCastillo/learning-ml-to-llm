@@ -2,7 +2,7 @@
 ## Prerequisite Learning Path Before LLM/Transformer Training
 
 ### Overview
-This learning path builds foundational ML concepts from first principles before moving to deep learning and LLMs. Each project teaches core concepts you'll encounter again when training Qwen3-1.7B, but without architectural complexity.
+This learning path builds foundational ML concepts from first principles before moving to deep learning and LLMs. Each project teaches core concepts you'll encounter again when training Qwen2.5-1.5B-Instruct, but without architectural complexity.
 
 Why this order: Understanding optimization, loss landscapes, generalization, and validation deeply on simple problems makes LLM training concepts click. You'll know why each step matters, not just follow a script.
 
@@ -598,13 +598,13 @@ def test_mse_perfect_predictions():
 
 def test_data_generator_shape():
     """Check data generator produces correct shapes."""
-    X, y = generate_linear_data(n_samples=50, n_features=3)
-    assert X.shape == (50, 3)
-    assert y.shape == (50,)
+    X, y = generate_linear_data(n_samples=50)
+    assert X.shape == (50, 1)
+    assert y.shape == (50, 1)
 
 def test_data_generator_linear_relationship():
     """Generated data should have strong linear correlation."""
-    X, y = generate_linear_data(n_samples=1000, noise=0.1)
+    X, y = generate_linear_data(n_samples=1000, noise_std=0.1)
     correlation = np.corrcoef(X.ravel(), y)[0, 1]
     assert abs(correlation) > 0.9  # Strong linear relationship
 

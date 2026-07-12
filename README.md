@@ -107,10 +107,10 @@ By completing this journey, you'll deeply understand:
 [→ Phase 2 Details](projects/phase2_transformers/README.md)
 
 ### Phase 3: LLM Fine-tuning (Weeks 18-23)
-**Goal**: Fine-tune Qwen3-1.7B and analyze behavior changes
+**Goal**: Fine-tune Qwen2.5-1.5B-Instruct and analyze behavior changes
 
 **Projects**:
-- Instruction tune Qwen3-1.7B with LoRA (using MLX)
+- Instruction tune Qwen2.5-1.5B-Instruct with LoRA (using MLX)
 - Comparative analysis: base vs tuned model
 - Systematic evaluation and documentation
 
@@ -291,7 +291,7 @@ learning-ml-to-llm/
 | Phase 1 | Classical ML (1-11) | Seconds-Minutes | 2-4GB |
 | Phase 2 | Build Transformer (12-13) | Minutes | 1-2GB |
 | Phase 2 | Pretrain Tiny Model (14) | 4-12 hours | 3-8GB |
-| Phase 3 | Fine-tune Qwen3 (16) | Hours | 8-12GB |
+| Phase 3 | Fine-tune Qwen2.5 (16) | Hours | 8-12GB |
 
 **Good news**: Phases 1-2 run on any laptop. Only Phase 3 needs serious hardware.
 
@@ -326,7 +326,7 @@ Track your progress in `PROGRESS_LOG.md`:
 **Learning Paths**:
 - `classical_ml_learning_path.md` - Detailed Phase 1 guide (Projects 1-11)
 - `complete_ml_learning_path_with_pretraining.md` - Full journey (Projects 12-17)
-- `qwen3_mlx_learning_project.md` - MLX fine-tuning guide
+- `qwen_mlx_learning_project.md` - MLX fine-tuning guide
 - `GETTING_STARTED_PLAN.md` - Step-by-step setup
 
 **Professional Development Guides** (in `docs/`):
@@ -543,7 +543,7 @@ Difficulty
 ### In 6 Months (All Phases)
 - [ ] Built transformer from scratch
 - [ ] Pretrained your own model
-- [ ] Fine-tuned Qwen3-1.7B
+- [ ] Fine-tuned Qwen2.5-1.5B-Instruct
 - [ ] **Ready for ML research or engineering roles!**
 
 ## ⚠️ Important Reminders

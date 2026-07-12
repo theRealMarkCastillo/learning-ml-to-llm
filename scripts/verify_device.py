@@ -15,7 +15,7 @@ from pathlib import Path
 cur = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(cur))
 
-from utils.device import backend_info, get_backend, backend_name, tensor, ensure_seed  # noqa: E402
+from utils.device import backend_info, backend_name, tensor, ensure_seed  # noqa: E402
 
 
 def main():

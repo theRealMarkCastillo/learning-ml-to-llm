@@ -46,11 +46,11 @@ pip install -r requirements.txt
 UNAME_S=$(uname -s || echo "")
 UNAME_M=$(uname -m || echo "")
 if [ "$UNAME_S" = "Darwin" ] && [ "$UNAME_M" = "arm64" ]; then
-	echo "\nDetected macOS arm64 (Apple Silicon). Installing MLX packages..."
+	echo "Detected macOS arm64 (Apple Silicon). Installing MLX packages..."
 	# MLX projects are moving fast; allow failures without breaking setup
 	pip install --upgrade mlx mlx-lm || echo "(warning) MLX install failed; continuing without MLX"
 else
-	echo "\nNon-Apple-Silicon platform detected. Skipping MLX packages."
+	echo "Non-Apple-Silicon platform detected. Skipping MLX packages."
 fi
 
 # Setup Jupyter kernel

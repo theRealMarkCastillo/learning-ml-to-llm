@@ -289,7 +289,7 @@ print(mx.default_device())
 - Your M4 with 64GB RAM is excellent for all exercises
 - Classical ML: seconds to minutes
 - Tiny transformer pretraining: 4-12 hours
-- Qwen3 fine-tuning: hours per run
+- Qwen2.5 fine-tuning: hours per run
 
 ## Phase 6: Checkpoint Strategy
 
@@ -415,7 +415,7 @@ jupyter notebook
 | Project 14 | 2 weeks | Pretraining (the centerpiece) |
 | Project 15 | 1 week | Analysis |
 | **Phase 2 Total** | **5 weeks** | **Transformer understanding** |
-| Projects 16-17 | 4-6 weeks | Qwen3 tuning and analysis |
+| Projects 16-17 | 4-6 weeks | Qwen2.5 tuning and analysis |
 | **Total Journey** | **19-23 weeks** | **Complete understanding** |
 
 ## Daily Commitment
