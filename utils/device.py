@@ -101,7 +101,8 @@ def _materialize(backend: Backend) -> BackendDetails:
             dev = mx.gpu if hasattr(mx, "gpu") else None
             return BackendDetails(Backend.MLX, f"MLX({dev})", extra=f"mx.version={getattr(mx, '__version__', 'unknown')}")
         except Exception:
-            # Fallback cascade
+            import warnings
+            warnings.warn("LEARNING_ML_BACKEND=mlx set but MLX import failed — falling back to CPU")
             return _materialize(Backend.CPU)
     if backend in (Backend.TORCH_CUDA, Backend.TORCH_MPS, Backend.CPU):
         try:
@@ -239,6 +240,8 @@ def ensure_seed(seed: int = 42):
             torch.manual_seed(seed)
             if b == Backend.TORCH_CUDA and torch.cuda.is_available():
                 torch.cuda.manual_seed_all(seed)
+            if b == Backend.TORCH_MPS and hasattr(torch.mps, "manual_seed"):
+                torch.mps.manual_seed(seed)
         except Exception:
             pass
 

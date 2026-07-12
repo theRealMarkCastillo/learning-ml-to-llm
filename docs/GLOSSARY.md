@@ -32,10 +32,13 @@ Additive scalar/vector shifting a linear transformation. Allows non-zero-centere
 Balance between underfitting (high bias) and overfitting (high variance). Goal: minimal generalization error.
 
 ### BLEU / ROUGE
-Text generation overlap metrics (n-gram precision / recall flavored). Crude; use cautiously for instruction models.
+Text generation overlap metrics measuring n-gram precision (BLEU) and recall (ROUGE). Useful as a rough signal; prefer human evaluation or LLM-as-judge for instruction models.
 
 ### Bootstrap Sampling
 Sampling with replacement to create datasets for bagging; enables out-of-bag error estimation.
+
+### Byte-Level BPE
+Tokenization operating on raw UTF-8 bytes rather than characters. Used by GPT-2+ and most modern LLMs. Guarantees any Unicode text can be tokenized without `<unk>` tokens.
 
 ### Byte Pair Encoding (BPE)
 Subword tokenization algorithm merging frequent pairs to compress corpus; balances vocab size and fragmentation.
@@ -49,6 +52,9 @@ Loss comparing predicted probability distribution to one-hot true distribution. 
 
 ### Catastrophic Forgetting
 Loss of previously learned capabilities during fine-tuning; mitigated by adapters, mixing data, or constraints.
+
+### Chain-of-Thought (CoT)
+Prompting technique where the model generates intermediate reasoning steps before a final answer. Dramatically improves performance on multi-step tasks. Standard in 2024+ for complex queries.
 
 ### Checkpoint
 Serialized model (and optimizer) state for resume and comparison.
@@ -70,13 +76,16 @@ Experimental protocol splitting data into folds to estimate generalization. Redu
 Test/validation information inadvertently used during training causing optimistic metrics.
 
 ### Decoder-Only Transformer
-Architecture predicting next token from all prior tokens (causal mask). Used in GPT/Mistral.
+Architecture predicting next token from all prior tokens (causal mask). Used in GPT/Qwen2.5.
 
 ### Decision Boundary
 Hypersurface separating predicted classes. Visualization tool for model discriminative behavior.
 
 ### Dropout
 Regularization technique randomly zeroing activations during training to reduce co-adaptation.
+
+### DPO (Direct Preference Optimization)
+Alignment method that directly optimizes a policy from human preference data without a separate reward model. Simpler alternative to RLHF. Widely adopted by 2024.
 
 ## E
 ### Early Stopping
@@ -98,24 +107,27 @@ Harmonic mean of precision and recall. Useful when balancing false positives vs 
 ### Feed-Forward Network (FFN)
 Per-token MLP inside transformer block; expands then contracts dimensionality for non-linear mixing.
 
-### Feature Importance
-Score indicating contribution of features to model predictions (tree impurity-based or permutation-based).
-
 ### Feature Engineering
 Creating or transforming input features to improve model performance (polynomial, interactions, encoding).
 
+### Feature Importance
+Score indicating contribution of features to model predictions (tree impurity-based or permutation-based).
+
 ### Fine-Tuning
 Adapting a pretrained model to a narrower task/distribution using additional data.
+
+### Flash Attention
+IO-aware exact attention algorithm that tiles computation to reduce memory reads/writes. Standard in PyTorch 2.0+ via `F.scaled_dot_product_attention`. Enables longer sequences.
 
 ### Forward Pass
 Computing model outputs from inputs. Precedes loss and gradient computation.
 
 ## G
-### Generalization
-Performance on unseen data. Ultimate goal; distinguishes memorization from learning patterns.
-
 ### GELU
 Activation approximating Gaussian gating; common in transformers.
+
+### Generalization
+Performance on unseen data. Ultimate goal; distinguishes memorization from learning patterns.
 
 ### Gradient
 Vector of partial derivatives of loss w.r.t. parameters. Direction of steepest local ascent; negated for descent.
@@ -151,14 +163,17 @@ Feature formed by combining two or more base features (e.g., product), capturing
 
 ## J
 ### JIT (Just-In-Time Compilation)
-Runtime graph/kernel optimization (not always applicable in MLX yet; concept placeholder).
+Runtime compilation of neural network graphs. MLX supports `mx.compile()` since v0.14.
 
 ## K
 ### Kernel (SVM)
 Function implicitly mapping inputs to higher-dimensional space enabling linear separability.
 
 ### KL Divergence
-Measure of how one probability distribution diverges from another; used in some regularization schemes.
+Measures how one probability distribution differs from another. Used in variational inference, knowledge distillation, and RLHF/DPO reward modeling.
+
+### KV Cache
+Cached key-value tensors from previous tokens during autoregressive generation. Avoids recomputing attention for all prior tokens, reducing generation from O(n³) to O(n²).
 
 ## L
 ### LayerNorm
@@ -195,6 +210,9 @@ Quantitative performance measure distinct from optimization objective (e.g., acc
 ### Mini-Batch
 Subset of data per iteration for stochastic gradient estimation.
 
+### Mixture of Experts (MoE)
+Architecture where only a subset of "expert" sub-networks activate per token, controlled by a learned router. Enables larger total parameter counts with near-constant inference cost.
+
 ### MLP (Multi-Layer Perceptron)
 Sequence of linear layers + activations; building block inside transformers.
 
@@ -204,9 +222,6 @@ Optimizer technique accumulating past gradients to smooth updates.
 ## N
 ### Normalization
 Rescaling values to stabilize training (e.g., LayerNorm, standardization).
-
-### NumPy
-Python numerical array library used for foundational implementations.
 
 ## O
 ### Objective
@@ -251,30 +266,36 @@ Reducing numeric precision (e.g., FP16 → INT8) for speed/memory savings.
 Matrices in attention: query seeks information, key indexes, value supplies content.
 
 ## R
+### RAG (Retrieval-Augmented Generation)
+Pattern where an LLM retrieves relevant documents from a knowledge base before generating. Grounds outputs in external facts, reducing hallucination.
+
+### RBF Kernel
+Radial basis function kernel exp(−γ||x−x′||²) enabling flexible non-linear boundaries in SVMs.
+
 ### Recall
 TP / (TP + FN); coverage of actual positives.
 
 ### Regularization
 Techniques to reduce overfitting (L1/L2, dropout, early stopping, low-rank constraints).
 
+### Repetition Degeneration
+Failure mode where autoregressive models get stuck repeating tokens or phrases. Mitigated via sampling strategies (temperature, top-p, repetition penalty).
+
 ### Residual Connection
 Adds input to block output; eases gradient flow in deep nets.
+
+### RLHF (Reinforcement Learning from Human Feedback)
+Training pipeline: human preference rankings → reward model → PPO policy optimization. The alignment technique behind ChatGPT, Claude, and most chat models.
 
 ### ROC Curve
 TPR vs FPR across thresholds; summarizes ranking performance.
 
-### Rogue Token (Generation)
-Token that derails output style or structure; often mitigated via constrained decoding.
-
-### RBF Kernel
-Radial basis function kernel exp(−γ||x−x′||²) enabling flexible non-linear boundaries in SVMs.
+### RoPE (Rotary Position Embeddings)
+Positional encoding applying rotation matrices to Q/K vectors based on relative positions. Better length generalization than sinusoidal. Used by Llama, Qwen2.5, and virtually all 2024+ open LLMs.
 
 ## S
 ### Scaling Laws
 Empirical relations between model/data/compute scale and loss.
-
-### Schedule (LR Schedule)
-Planned variation of learning rate over training (warmup, cosine decay).
 
 ### Seed (Random Seed)
 Deterministic initializer for reproducibility of randomness.
@@ -285,8 +306,14 @@ Activation σ(z)=1/(1+e^{−z}) mapping logits to probabilities in binary classi
 ### Softmax
 Normalizes logits into probability distribution; exponentiate + normalize.
 
+### Speculative Decoding
+Inference acceleration where a small draft model proposes tokens verified in parallel by the large model. 2-3x speedup without quality loss.
+
 ### Standardization
 Feature scaling to zero mean and unit variance: (x−μ)/σ.
+
+### State Space Models (SSM)
+Alternative sequence models (S4, Mamba, Mamba-2, H3). Linear-time inference vs quadratic attention while maintaining competitive quality.
 
 ### Stochastic Gradient Descent (SGD)
 Parameter updates using batch-sampled gradients; adds noise aiding generalization.
@@ -299,6 +326,9 @@ Training sample lying on or within margin influencing SVM boundary.
 
 ### Support Vector Machine (SVM)
 Classifier maximizing margin; uses kernels to model non-linear boundaries.
+
+### SwiGLU
+Gated activation function: SiLU(x·W₁) ⊙ (x·W₂). Better training dynamics than ReLU/GELU. Standard in Llama, Qwen2.5, and most modern LLMs.
 
 ## T
 ### Temperature (Sampling)
@@ -376,8 +406,8 @@ When you encounter a new term:
 ## Quick Mental Models
 Concept | Mental Compression
 --------|--------------------
-Gradient | Local slope telling you how to tweak code-generated outputs.
-Attention | Dynamic content-based join between sequence positions.
+Gradient | Local slope telling you how to adjust model parameters to reduce loss.
+Attention | Dynamic weighted relevance lookup across sequence positions.
 LoRA | Low-rank patch overlaying original weights.
 Perplexity | Average branching factor; lower = more certainty.
 Regularization | Guardrail preventing overconfident memorization.

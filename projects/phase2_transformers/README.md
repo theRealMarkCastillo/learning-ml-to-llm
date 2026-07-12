@@ -61,7 +61,7 @@ Compare pretrained vs random models:
 - Deep understanding of transformer architecture
 - Experience with pretraining process
 - Insight into what base models learn
-- Foundation for understanding Mistral fine-tuning
+- Foundation for understanding Qwen2.5 fine-tuning
 - ✨ Hands-on evaluation and analysis skills
 
 ## Hardware Requirements

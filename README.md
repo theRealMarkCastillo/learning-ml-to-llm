@@ -107,10 +107,10 @@ By completing this journey, you'll deeply understand:
 [→ Phase 2 Details](projects/phase2_transformers/README.md)
 
 ### Phase 3: LLM Fine-tuning (Weeks 18-23)
-**Goal**: Fine-tune Mistral 7B and analyze behavior changes
+**Goal**: Fine-tune Qwen3-1.7B and analyze behavior changes
 
 **Projects**:
-- Instruction tune Mistral 7B with LoRA (using MLX)
+- Instruction tune Qwen3-1.7B with LoRA (using MLX)
 - Comparative analysis: base vs tuned model
 - Systematic evaluation and documentation
 
@@ -185,7 +185,7 @@ See `utils/device.py` for details and helper functions (`backend_name`, `move_to
 ### Prerequisites
 
 - **Python 3.8+** installed
-- **4-8GB RAM** minimum (64GB recommended for Phase 3)
+- **4-8GB RAM** minimum (16-32GB recommended for Phase 3)
 - **Jupyter** for running notebooks
 - **Time commitment**: 10-20 hours/week for 4-6 months
 - **Math background**: Basic calculus and linear algebra helpful but not required
@@ -280,7 +280,7 @@ learning-ml-to-llm/
 
 ### Recommended Specs (All Phases)
 - **CPU**: Apple Silicon (M1/M2/M3/M4) or modern x86
-- **RAM**: 32-64GB for Phase 3 (Mistral fine-tuning)
+- **RAM**: 16-32GB for Phase 3 (Qwen2.5 fine-tuning)
 - **Storage**: 20GB
 - **OS**: macOS (for MLX optimization) or Linux
 
@@ -291,7 +291,7 @@ learning-ml-to-llm/
 | Phase 1 | Classical ML (1-11) | Seconds-Minutes | 2-4GB |
 | Phase 2 | Build Transformer (12-13) | Minutes | 1-2GB |
 | Phase 2 | Pretrain Tiny Model (14) | 4-12 hours | 3-8GB |
-| Phase 3 | Fine-tune Mistral (16) | Hours | 20-30GB |
+| Phase 3 | Fine-tune Qwen3 (16) | Hours | 8-12GB |
 
 **Good news**: Phases 1-2 run on any laptop. Only Phase 3 needs serious hardware.
 
@@ -326,7 +326,7 @@ Track your progress in `PROGRESS_LOG.md`:
 **Learning Paths**:
 - `classical_ml_learning_path.md` - Detailed Phase 1 guide (Projects 1-11)
 - `complete_ml_learning_path_with_pretraining.md` - Full journey (Projects 12-17)
-- `mistral_mlx_learning_project.md` - MLX fine-tuning guide
+- `qwen3_mlx_learning_project.md` - MLX fine-tuning guide
 - `GETTING_STARTED_PLAN.md` - Step-by-step setup
 
 **Professional Development Guides** (in `docs/`):
@@ -370,7 +370,7 @@ By completing this journey, you'll understand:
 **Most courses do this**:
 ```python
 from transformers import AutoModel
-model = AutoModel.from_pretrained("mistral-7b")
+model = AutoModel.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
 # ✨ Magic happens ✨
 ```
 You learn to use tools but don't understand what's inside.
@@ -543,7 +543,7 @@ Difficulty
 ### In 6 Months (All Phases)
 - [ ] Built transformer from scratch
 - [ ] Pretrained your own model
-- [ ] Fine-tuned Mistral 7B
+- [ ] Fine-tuned Qwen3-1.7B
 - [ ] **Ready for ML research or engineering roles!**
 
 ## ⚠️ Important Reminders

@@ -18,7 +18,7 @@ Beyond core ML algorithms and LLM fine-tuning, professional AI development requi
 | **Responsible AI** | [RESPONSIBLE_AI_GUIDE.md](RESPONSIBLE_AI_GUIDE.md) | Bias detection, fairness metrics, explainability (SHAP, LIME), privacy |
 | **Model Evaluation** | classical_ml_learning_path.md (Project 7) | Classification metrics, ROC/PR curves, calibration |
 | **Cross-Validation** | classical_ml_learning_path.md (Project 8) | k-fold, stratified, time-series CV, proper data splits |
-| **Inference Optimization** | mistral_mlx_learning_project.md (Section 18) | Quantization, batching, KV cache, latency optimization |
+| **Inference Optimization** | qwen_mlx_learning_project.md (Section 18) | Quantization, batching, KV cache, latency optimization |
 
 ### ⚠️ Partially Covered
 

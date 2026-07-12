@@ -40,7 +40,7 @@ Understanding transformer architecture and pretraining:
 
 Real-world LLM fine-tuning:
 
-16. **Mistral Instruction Tuning** - LoRA fine-tuning with MLX
+16. **Qwen2.5 Instruction Tuning** - LoRA fine-tuning with MLX
 17. **Comparative Analysis** - Base vs tuned systematic evaluation
 
 ## Project Status
@@ -66,7 +66,7 @@ Track your progress:
 - [ ] Project 13: Tokenization
 - [ ] Project 14: Pretraining (Core Project)
 - [ ] Project 15: Analysis
-- [ ] Project 16: Mistral Tuning
+- [ ] Project 16: Qwen2.5 Tuning
 - [ ] Project 17: Comparative Analysis
 
 ## Navigation

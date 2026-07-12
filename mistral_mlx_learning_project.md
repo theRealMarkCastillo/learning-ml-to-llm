@@ -1,7 +1,7 @@
-# MLX Mistral 7B Instruction Tuning Learning Project
+# MLX Qwen2.5 Instruction Tuning Learning Project
 
 ## 1. Strategic Overview
-Hardware: M4 Mac 64GB unified memory  |  Framework: Apple MLX  |  Base Model: Mistral 7B  |  Modality: Instruction fine-tuning via LoRA (and optional full update).
+Hardware: M4 Mac 64GB unified memory  |  Framework: Apple MLX  |  Base Model: Qwen2.5-1.5B-Instruct  |  Modality: Instruction fine-tuning via LoRA (and optional full update).
 
 Why this project: You transition from conceptual understanding (classical ML + tiny pretraining) to operating on a production-scale architecture. This guide emphasizes the why—each design choice, parameter, and evaluation protocol tied to long-term mastery and research rigor.
 
@@ -167,7 +167,7 @@ import mlx.core as mx
 def test_tokenization_reversibility():
     """Tokenize → detokenize should preserve text (modulo whitespace)."""
     from transformers import AutoTokenizer
-    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
     
     text = "Hello, world! This is a test."
     tokens = tokenizer.encode(text)
@@ -202,7 +202,7 @@ def test_batch_shapes_consistent():
 
 def test_special_tokens_present():
     """BOS and EOS tokens should be in sequences."""
-    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
     dataset = load_train_data()
     
     for item in dataset[:10]:  # Sample check
@@ -239,7 +239,7 @@ def test_lora_adapter_shapes():
 
 def test_model_forward_pass():
     """Model should accept inputs and produce logits."""
-    model = load_model("mistralai/Mistral-7B-v0.1")
+    model = load_model("Qwen/Qwen2.5-1.5B-Instruct")
     
     input_ids = mx.array([[1, 2, 3, 4, 5]])  # Dummy tokens
     
@@ -252,8 +252,8 @@ def test_model_forward_pass():
 
 def test_generation_produces_valid_tokens():
     """Generated tokens should be in vocabulary range."""
-    model = load_model("mistralai/Mistral-7B-v0.1")
-    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
+    model = load_model("Qwen/Qwen2.5-1.5B-Instruct")
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
     
     prompt = "Hello, my name is"
     generated = generate(model, tokenizer, prompt, max_tokens=20)
@@ -392,7 +392,7 @@ Benchmark | What It Measures | Implementation Notes
 **Safety Benchmarks** | Harmful content refusal | Custom adversarial prompts + existing red-team sets.
 
 Implementation Strategy:
-- **Baseline first**: Run benchmarks on untuned Mistral; establish reference scores.
+- **Baseline first**: Run benchmarks on untuned Qwen2.5; establish reference scores.
 - **Post-training**: Re-run same benchmarks; compare differences.
 - **Focused analysis**: Deep dive on categories showing significant drift.
 - **Statistical significance**: Bootstrap confidence intervals for score differences.
@@ -524,10 +524,10 @@ Optimization | Impact | Implementation
 Memory-Speed Trade-off Table:
 | Config | Memory (GB) | Tokens/sec | Quality |
 |--------|-------------|------------|---------|
-| Full FP16 | ~28 | 20-30 | Baseline |
-| LoRA FP16 | ~22 | 20-30 | Baseline |
-| LoRA Int8 | ~14 | 25-35 | -1% |
-| LoRA Int4 | ~9 | 30-40 | -3% |
+| Full FP16 | ~3 | 20-30 | Baseline |
+| LoRA FP16 | ~3 | 20-30 | Baseline |
+| LoRA Int8 | ~1.5 | 25-35 | -1% |
+| LoRA Int4 | ~0.8 | 30-40 | -3% |
 
 ### 18.3 Production Deployment Checklist
 - [ ] Model checkpoint versioning with metadata (training config, eval scores).
@@ -564,7 +564,7 @@ Alignment | Controlled adaptation surfaces trade-offs between helpfulness and ha
 
 ## 20. Key References
 - MLX GitHub: https://github.com/ml-explore/mlx
-- Mistral model card & technical docs.
+- Qwen2.5 model card & technical docs.
 - LoRA paper (Hu et al. 2021).
 - Chinchilla scaling laws (Hoffmann et al. 2022) for data/compute trade-offs context.
 - Alignment taxonomy literature for evaluation frameworks.
@@ -578,4 +578,4 @@ Immediate next step: Prepare dataset → run baseline LoRA config → sample che
 
 ---
 
-**Project Goal (Refined)**: Internalize practical and theoretical mechanics of instruction tuning on Mistral 7B using MLX, producing evidence-backed insights that generalize to future alignment and capability research.
+**Project Goal (Refined)**: Internalize practical and theoretical mechanics of instruction tuning on Qwen2.5-1.5B-Instruct using MLX, producing evidence-backed insights that generalize to future alignment and capability research.

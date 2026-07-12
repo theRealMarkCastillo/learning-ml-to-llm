@@ -11,7 +11,7 @@ matplotlib>=3.9.0
 seaborn>=0.13.0
 
 # Jupyter
-jupyter>=1.1.0
+jupyter>=1.0.0
 ipykernel>=6.29.0
 ipywidgets>=8.1.0
 
@@ -19,17 +19,25 @@ ipywidgets>=8.1.0
 # PyTorch is the default backend across platforms
 torch>=2.5.0
 
+# HuggingFace ecosystem (Phase 3)
+transformers>=4.46.0
+datasets>=3.0.0
+safetensors>=0.4.0
+sentencepiece>=0.2.0
+tokenizers>=0.20.0
+accelerate>=1.0.0
+
 # Apple Silicon MLX backend (macOS only)
 # NOTE: Install these only on macOS arm64. The setup script handles this automatically.
-mlx>=0.29.0; platform_system == "Darwin" and platform_machine == "arm64"
-mlx-lm>=0.28.0; platform_system == "Darwin" and platform_machine == "arm64"
+mlx>=0.20.0; platform_system == "Darwin" and platform_machine == "arm64"
+mlx-lm>=0.20.0; platform_system == "Darwin" and platform_machine == "arm64"
 
 # Development Tools
-ipython>=8.29.0
-black>=24.10.0
-flake8>=7.1.0
+ipython>=8.20.0
+ruff>=0.5.0
 pytest>=8.3.0
 
 # Additional utilities
 tqdm>=4.67.0
 pyyaml>=6.0.2
+rich>=13.0.0

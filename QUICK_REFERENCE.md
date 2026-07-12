@@ -64,7 +64,7 @@
 - ✅ Project 15 - Analysis
 
 **Phase 3: LLM Fine-tuning** (2 projects)
-- ✅ Project 16 - Mistral Instruction Tuning
+- ✅ Project 16 - Qwen3 Instruction Tuning
 - ✅ Project 17 - Comparative Analysis
 
 **Professional Topics** (Optional - 4 extension projects in docs/)

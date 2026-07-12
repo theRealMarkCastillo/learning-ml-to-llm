@@ -2,7 +2,7 @@
 ## Prerequisite Learning Path Before LLM/Transformer Training
 
 ### Overview
-This learning path builds foundational ML concepts from first principles before moving to deep learning and LLMs. Each project teaches core concepts you'll encounter again when training Mistral 7B, but without architectural complexity.
+This learning path builds foundational ML concepts from first principles before moving to deep learning and LLMs. Each project teaches core concepts you'll encounter again when training Qwen3-1.7B, but without architectural complexity.
 
 Why this order: Understanding optimization, loss landscapes, generalization, and validation deeply on simple problems makes LLM training concepts click. You'll know why each step matters, not just follow a script.
 
@@ -853,7 +853,7 @@ Real-world problems require integrating data, modeling, validation, and document
 - Package the pipeline for reuse.
 
 #### Alignment to Long-Term Goals
-This mirrors how you’ll run Mistral fine-tuning: clear goals, solid validation, disciplined experimentation, thorough analysis.
+This mirrors how you'll run Qwen2.5 fine-tuning: clear goals, solid validation, disciplined experimentation, thorough analysis.
 
 ---
 
@@ -911,7 +911,7 @@ Working systematically through all projects (not rushing):
 - Project 10 (Feature Engineering): 1 week.
 - Project 11 (End-to-End): 2-3 weeks.
 
-Total: 8-12 weeks before moving to Mistral/LLM training.
+Total: 8-12 weeks before moving to Qwen2.5/LLM training.
 
 ---
 
@@ -922,4 +922,4 @@ Total: 8-12 weeks before moving to Mistral/LLM training.
 3. Don’t rush; depth over breadth.
 4. After Project 11, proceed to transformers/pretraining with confidence.
 
-Once you finish Project 11, you'll be ready to return to the Mistral 7B project with solid conceptual foundations.
+Once you finish Project 11, you'll be ready to return to the Qwen2.5-1.5B-Instruct project with solid conceptual foundations.

@@ -129,7 +129,8 @@ class MultiHeadAttention(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Feed-Forward Network (GELU variant of the post-Llama choice)
+# Feed-Forward Network (GELU activation — for educational clarity; production
+# LLMs like Llama use SwiGLU/SiLU)
 # ---------------------------------------------------------------------------
 
 class FeedForward(nn.Module):

@@ -2,9 +2,9 @@
 ## From Classical ML Through Pretraining to LLM Fine-tuning
 
 ### Overview
-This expanded learning path builds from classical ML fundamentals through understanding pretraining from scratch, culminating in instruction tuning Mistral 7B. The middle pretraining section is crucial—it shows you what a "base model" actually is and why fine-tuning works.
+This expanded learning path builds from classical ML fundamentals through understanding pretraining from scratch, culminating in instruction tuning Qwen2.5-1.5B-Instruct. The middle pretraining section is crucial—it shows you what a "base model" actually is and why fine-tuning works.
 
-**Learning Arc**: Classical ML fundamentals → understand optimization deeply → build a tiny transformer → pretrain it from scratch → understand what you learned → fine-tune Mistral with full clarity
+**Learning Arc**: Classical ML fundamentals → understand optimization deeply → build a tiny transformer → pretrain it from scratch → understand what you learned → fine-tune Qwen2.5 with full clarity
 
 Terminology helper: New to LLM specifics (attention heads, positional encodings, perplexity, LoRA, tokenization)? Refer to docs/GLOSSARY.md throughout this section.
 
@@ -159,7 +159,7 @@ def test_gradient_flow():
 - Q: Do I need rotary/relative position? A: Not to learn—start with sinusoidal; explore rotary later.
 
 #### Alignment to Long-Term Goals
-You'll recognize these same components (with larger dims) inside Mistral; this removes black-box mystique during fine-tuning.
+You'll recognize these same components (with larger dims) inside Qwen2.5; this removes black-box mystique during fine-tuning.
 
 ---
 
@@ -318,7 +318,7 @@ Attention patterns reveal what the model focuses on during prediction—critical
 - BERTology-style probing: which heads capture syntax, semantics, coreference?
 
 #### Alignment to Long-Term Goals
-When fine-tuning Mistral, visualizing attention patterns reveals if the model attends to instruction cues properly; attention analysis aids debugging failure modes (e.g., ignoring constraints); understanding head specialization informs which layers to fine-tune (LoRA targeting).
+When fine-tuning Qwen2.5, visualizing attention patterns reveals if the model attends to instruction cues properly; attention analysis aids debugging failure modes (e.g., ignoring constraints); understanding head specialization informs which layers to fine-tune (LoRA targeting).
 
 ---
 
@@ -396,7 +396,7 @@ Quantify the value of pretraining via downstream transfer—evidence over intuit
 - Q: Does pretraining always help? A: Generally yes, but domain shift can reduce gains; adaptation matters.
 
 #### Alignment to Long-Term Goals
-Builds the intuition for why we adapt Mistral instead of training from scratch and which regimes benefit most.
+Builds the intuition for why we adapt Qwen2.5 instead of training from scratch and which regimes benefit most.
 
 ---
 
@@ -409,26 +409,26 @@ By now you understand:
 - **Base model**: Result of pretraining with learned weights
 - **Fine-tuning**: Take base model, adapt to specific task with small data
 
-Fine-tuning Mistral will feel like Projects 14-15 but simpler:
+Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 - You're not updating all parameters (LoRA restricts to low-rank)
 - You're on a curated dataset (instructions, not raw text)
 - You're specializing existing knowledge, not learning from scratch
 
 ---
 
-## Project 16: Instruction Tuning Mistral 7B
+## Project 16: Instruction Tuning Qwen2.5-1.5B-Instruct
 
-**Goal**: Fine-tune the real Mistral 7B base model using knowledge from pretraining.
+**Goal**: Fine-tune the real Qwen2.5-1.5B-Instruct using knowledge from pretraining.
 
 **What to Build**:
-- Load Mistral 7B base model
+- Load Qwen2.5-1.5B-Instruct
 - Prepare instruction dataset (~10k examples)
 - Set up LoRA (rank 32, using concepts from Project 14)
 - Training loop (same fundamentals as pretraining, but constrained)
 - Evaluate before/after
 
 **Key Concepts Now Clear**:
-- The model inside Mistral: you've now built and trained a tiny version
+- The model inside Qwen2.5: you've now built and trained a tiny version
 - Attention patterns: you've visualized them
 - Token prediction loss: you've optimized it for hours
 - Learning dynamics: you've seen loss curves
@@ -454,7 +454,7 @@ Fine-tuning Mistral will feel like Projects 14-15 but simpler:
 
 ## Project 17: Comparative Analysis - Base vs Instruction-Tuned
 
-**Goal**: Systematically compare Mistral base vs your tuned version. This is where your research instincts come in.
+**Goal**: Systematically compare Qwen2.5 base vs your tuned version. This is where your research instincts come in.
 
 **What to Analyze**:
 - Generate responses to diverse prompts: both versions
@@ -487,7 +487,7 @@ Fine-tuning Mistral will feel like Projects 14-15 but simpler:
 - Project 15: Analyze pretrained vs random
 
 ### Phase 3: Real LLM Fine-tuning (4-6 weeks)
-- Project 16: Instruction tune Mistral 7B
+- Project 16: Instruction tune Qwen2.5-1.5B-Instruct
 - Project 17: Comparative analysis and research
 
 **Total Timeline**: 16-24 weeks (~4-6 months) of engaged learning
@@ -517,7 +517,7 @@ If you committed ~20 hours/week:
 - Days 4-7: Analysis, experiments, write-up
 - Project 15: Comparative analysis
 
-**Week 17-20**: Mistral Fine-tuning (Projects 16-17)
+**Week 17-20**: Qwen2.5 Fine-tuning (Projects 16-17)
 - Week 17: Set up, prepare data
 - Week 18: First fine-tuning runs and evaluation
 - Week 19: Experimentation and iteration
@@ -586,10 +586,10 @@ Your setup handles all of this:
 | Building transformer | Hours | <1GB |
 | Tokenization | Minutes | <100MB |
 | Pretrain tiny model (5MB data) | 4-12 hours | ~3GB |
-| Fine-tune Mistral 7B | Hours per run | ~20-30GB |
+| Fine-tune Qwen2.5-1.5B-Instruct | Hours per run | ~4-6GB |
 | Analysis/inference | Minutes | ~15GB |
 
-You have headroom for everything. The longest single operation (Mistral fine-tuning) uses maybe 30GB at peak, leaving 34GB for OS and other processes.
+You have headroom for everything. The longest single operation (Qwen2.5 fine-tuning) uses maybe 6GB at peak, leaving 34GB for OS and other processes.
 
 ---
 
@@ -616,7 +616,7 @@ You have headroom for everything. The longest single operation (Mistral fine-tun
    - Rigorously compare pretrained vs random
    - Solidify why pretraining matters
 
-6. **Fine-tune Mistral** (Projects 16-17)
+6. **Fine-tune Qwen2.5** (Projects 16-17)
    - Now it will be clear why this works
    - Apply your analysis skills
    - Connect to your research interests
