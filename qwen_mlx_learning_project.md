@@ -329,8 +329,8 @@ Component | Default | Tuning Notes
 ----------|---------|-------------
 LR | 2e-4 | Lower if instability; try cosine schedule with warmup (5%).
 Batch Size | 32 | Increase for smoother gradients; watch memory headroom.
-LoRA Rank | 32 | Adjust: 16 (smaller footprint), 64 (greater capacity).
-LoRA Alpha | 32 | Set α = r (this notebook uses α/r = 1.0 — the standard from Hu et al. 2021).
+LoRA Rank | 8 | The notebook defaults to 8 for efficiency; 16 / 32 / 64 add capacity at modest memory cost.
+LoRA Alpha | 16 | α = 2·r gives α/r = 2.0, a standard value within the 1.0–2.0 range Hu et al. (2021) recommends.
 Weight Decay | 0.01 | Mild regularization; may reduce for LoRA-only training.
 Gradient Clip | 1.0 | Protect against rare spikes.
 
@@ -455,7 +455,7 @@ Include:
 
 ## 17. Practical Starting Point (Concrete)
 Baseline (LoRA) Setup:
-- Rank: 32, Alpha: 32, LR: 2e-4 (cosine warmup 5%). α/r = 1.0.
+- Rank: 8, Alpha: 16, LR: 2e-4 (cosine warmup 5%). α/r = 2.0.
 - Batch: 32, Seq length: 1024 (adjust per memory).
 - Optimizer: AdamW (β1=0.9, β2=0.98, wd=0.01).
 - Checks: After 200 steps sample 5 prompts; validate adherence.
@@ -519,7 +519,7 @@ Reporting | Consolidate insights | 0.5 day
 
 ---
 
-## 19. Long-Term Research Tie-ins
+## 20. Long-Term Research Tie-ins
 Area | Connection
 -----|-----------
 Safety | Instruction tuning alters refusal calibration; measure shifts.
@@ -529,7 +529,7 @@ Alignment | Controlled adaptation surfaces trade-offs between helpfulness and ha
 
 ---
 
-## 20. Key References
+## 21. Key References
 - MLX GitHub: https://github.com/ml-explore/mlx
 - Qwen2.5 model card & technical docs.
 - LoRA paper (Hu et al. 2021).
@@ -538,7 +538,7 @@ Alignment | Controlled adaptation surfaces trade-offs between helpfulness and ha
 
 ---
 
-## 21. Summary & Next Action
+## 22. Summary & Next Action
 You now possess a structured blueprint emphasizing why each component matters, how to implement and instrument it, and how to interpret outcomes through a long-term mastery and research lens.
 
 Immediate next step: Prepare dataset → run baseline LoRA config → sample checkpoints → evaluate adherence & retention.

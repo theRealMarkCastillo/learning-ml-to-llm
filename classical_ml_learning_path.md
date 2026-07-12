@@ -162,10 +162,58 @@ Generalizing to many classes mirrors LLM vocabulary prediction (tens of thousand
 #### Alignment to Long-Term Goals
 Token prediction in LLMs is softmax over vocabulary; this project builds the exact probabilistic lens you’ll reuse.
 
+---
 
+### Project 4: Regularization and Overfitting
+
+#### Motivation (Why)
+Generalization—performing well on unseen data—is the whole game; regularization is how we control complexity.
+
+#### Learning Objectives
+- Diagnose under/overfitting with train/test curves.
+- Implement L1/L2 penalties and interpret effects on parameters.
+- Understand bias-variance trade-off empirically.
+
+#### Conceptual Core
+- Regularization penalizes complexity to reduce variance.
+- L2 shrinks weights smoothly; L1 induces sparsity.
+- Model capacity vs data size determines overfitting risk.
+
+#### Mathematical Foundations
+- Ridge loss: [MSE](docs/GLOSSARY.md#mean-squared-error-mse) + λ||w||²; Lasso: MSE + λ||w||₁.
+- Effect: gradients include penalty terms (2λw for L2; sign(w) for L1).
+
+#### Implementation Steps (How)
+1. Fit polynomials of increasing degree to noisy sine.
+2. Add L2 and L1; sweep λ.
+3. Compare train vs test loss; plot parameter magnitudes.
+
+#### Instrumentation & Evaluation
+- Train/test curves on same plot.
+- Parameter paths as λ increases.
+- Visualize fitted curves vs degree and λ.
+
+#### Common Pitfalls & Debugging
+- Over-regularization: high bias; curve too flat.
+- Under-regularization: high variance; wild oscillations.
+- Leakage: ensure test set is untouched during tuning.
+
+#### FAQ
+- Q: When use L1 vs L2? A: L1 for sparsity/feature selection; L2 for smooth shrinkage and numerical stability.
+- Q: Is [early stopping](docs/GLOSSARY.md#early-stopping) a regularizer? A: Yes—limits effective capacity by cutting training short.
+- Q: How to pick λ? A: [Cross-validation](docs/GLOSSARY.md#cross-validation-cv) on validation folds.
+
+#### Extensions & Next Experiments
+- Compare early stopping vs explicit L2.
+- Elastic Net (mix of L1/L2) to balance sparsity and stability.
+- Add noise levels to study robustness.
+
+#### Alignment to Long-Term Goals
+LoRA is a structural regularizer (low-rank constraint). Understanding classic regularizers informs better adapter rank/alpha choices.
 
 ---
 
+---
 
 
 ### Project 5: Decision Trees and Feature Importance
@@ -264,13 +312,58 @@ Ensembles reduce variance and improve robustness by aggregating weak learners—
 #### Alignment to Long-Term Goals
 Mixture-of-experts ensembling ideas appear in modern LLMs; understanding variance reduction aids system-level design.
 
+---
 
+### Project 7: Classification Metrics Deep Dive
 
+#### Motivation (Why)
+Accuracy can deceive; robust evaluation requires the right metric for the task and costs.
 
+#### Learning Objectives
+- Compute and interpret precision, recall, F1, ROC-AUC, PR-AUC.
+- Understand threshold effects and calibration.
+- Design evaluation protocols for imbalanced data.
+
+#### Conceptual Core
+- Confusion matrix as the base object; metrics derive from it.
+- Threshold tuning changes confusion trade-offs.
+- ROC vs PR focus: separability vs performance on rare positives.
+
+#### Mathematical Foundations
+- Precision = TP/(TP+FP); Recall = TP/(TP+FN); F1 = 2PR/(P+R).
+- ROC curve from TPR vs FPR at varying thresholds.
+
+#### Implementation Steps (How)
+1. Train multiple models on imbalanced data.
+2. Plot ROC and PR curves; compute AUCs.
+3. Sweep thresholds; produce metric vs threshold plots.
+
+#### Instrumentation & Evaluation
+- Heatmap [confusion matrices](docs/GLOSSARY.md#confusion-matrix); annotate errors.
+- [Calibration](docs/GLOSSARY.md#calibration) curves: predicted prob vs observed frequency.
+- Cost-sensitive summaries (assign costs to FP/FN).
+
+#### Common Pitfalls & Debugging
+- Using accuracy on imbalanced sets.
+- Ignoring calibration when using probabilities operationally.
+- Comparing models at different thresholds unfairly.
+
+#### FAQ
+- Q: ROC or PR for rare events? A: PR is more informative with class imbalance.
+- Q: How to pick a threshold? A: Optimize for your cost function or [F1](docs/GLOSSARY.md#f1-score); validate on held-out data.
+- Q: Why does [AUC](docs/GLOSSARY.md#auc-area-under-roc-curve) look good but precision is low? A: AUC summarizes ranking quality, not operating-point precision.
+
+#### Extensions & Next Experiments
+- Cost curves and decision analysis.
+- Expected calibration error (ECE) computation.
+- Bootstrapped confidence intervals for metrics.
+
+#### Alignment to Long-Term Goals
+You'll evaluate instruction-tuned models along multiple axes; this rigor avoids misleading conclusions.
 
 ---
 
-
+### Project 8: Cross-Validation and Data Splits
 
 #### Motivation (Why)
 Sound experimental design prevents overconfident results and supports reproducible conclusions.
@@ -316,6 +409,8 @@ Sound experimental design prevents overconfident results and supports reproducib
 
 #### Alignment to Long-Term Goals
 Fine-tuning experiments need rigorous validation to compare setups fairly and avoid overfitting to a dev set.
+
+---
 
 ---
 
