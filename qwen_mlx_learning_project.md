@@ -83,7 +83,7 @@ Approach | Pros | Cons | When to Use
 LoRA | Efficient, modular, preserves base strengths | Limited capacity, may underfit complex shifts | Rapid iteration, multi-task adapters.
 Full Fine-tune | Maximum adaptation, no abstraction layer | Risk of catastrophic forgetting, higher cost | Deep domain shift, research probing.
 
-Recommendation: Begin LoRA rank 32; later increase rank or perform one full fine-tune for comparative insight.
+Recommendation: Begin with the notebook defaults (rank 8, alpha 16, α/r=2.0). The code uses a toy dataset for fast iteration; for a real run, increase rank to 16–32 and scale up data.
 
 ---
 
@@ -327,8 +327,9 @@ def test_evaluation_metrics_computed():
 ## 10. Hyperparameters (Starting Grid)
 Component | Default | Tuning Notes
 ----------|---------|-------------
-LR | 2e-4 | Lower if instability; try cosine schedule with warmup (5%).
-Batch Size | 32 | Increase for smoother gradients; watch memory headroom.
+LR | 5e-5 | Notebook smoke-test default; for longer runs 2e-4 with cosine warmup (5%) is a reasonable start.
+Max Steps | 5 (smoke test) | Set `DRY_RUN=True` for quick iteration; `DRY_RUN=False` and increase to 500–2000 for a real run.
+Batch Size | (dataset driven) | Toy dataset uses ~10; 32 works well for real instruction data.
 LoRA Rank | 8 | The notebook defaults to 8 for efficiency; 16 / 32 / 64 add capacity at modest memory cost.
 LoRA Alpha | 16 | α = 2·r gives α/r = 2.0, a standard value within the 1.0–2.0 range Hu et al. (2021) recommends.
 Weight Decay | 0.01 | Mild regularization; may reduce for LoRA-only training.
@@ -454,11 +455,13 @@ Include:
 ---
 
 ## 17. Practical Starting Point (Concrete)
-Baseline (LoRA) Setup:
-- Rank: 8, Alpha: 16, LR: 2e-4 (cosine warmup 5%). α/r = 2.0.
-- Batch: 32, Seq length: 1024 (adjust per memory).
-- Optimizer: AdamW (β1=0.9, β2=0.98, wd=0.01).
-- Checks: After 200 steps sample 5 prompts; validate adherence.
+Baseline (LoRA) Setup (matching the notebook defaults):
+- Rank: 8, Alpha: 16, LR: 5e-5 (smoke-test default). α/r = 2.0.
+- The notebook sets `DRY_RUN=True` and `max_steps=5` for fast verification;
+  set `DRY_RUN=False` and increase `max_steps` to 500–2000 for a real run.
+- Optimizer: AdamW. Batch size depends on tokenized data size.
+- Checks: Run the smoke test first (~1 min); verify loss decreases and output
+  adheres to instruction format before committing to a longer run.
 
 Initial Prompts for Evaluation:
 1. "List three use-cases for edge computing."

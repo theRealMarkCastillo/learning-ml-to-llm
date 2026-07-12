@@ -5,7 +5,7 @@
 This directory contains all projects for the ML to LLM learning journey, organized into three phases.
 
 ## Phase 1: Classical ML Foundation (Projects 1-11 + Bridges)
-**Duration**: 9-14 weeks
+**Duration**: 10-14 weeks
 
 Foundation of machine learning concepts:
 

@@ -101,7 +101,7 @@ python scripts/verify_device.py # confirm backend (MLX / CUDA / MPS / CPU)
    `projects/phase1_classical_ml/project01_linear_regression/linear_regression_from_scratch.ipynb`,
    execute every cell, run the experiments, attempt the exercises.
 3. **Keep notes**: jot down what you learn (your own file, a journal, git commits — your call).
-4. **Continue**: Phase 1 takes ~10-14 weeks; Phase 2 ~5 weeks; Phase 3 ~4 weeks.
+4. **Continue**: Phase 1 takes ~10-14 weeks; Phase 2 ~5 weeks; Phase 3 ~3 weeks.
 
 ## Utilities Ready to Use
 

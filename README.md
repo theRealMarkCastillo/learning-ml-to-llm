@@ -322,10 +322,10 @@ Keep your own notes as you go — a private learning journal, a git branch per p
 
 ### Included Documents
 
-**Learning Paths** (pick one and follow it end-to-end):
-- `classical_ml_learning_path.md` — Detailed Phase 1 guide (Projects 1-11)
-- `complete_ml_learning_path_with_pretraining.md` — Phases 1-2 deep-dive
-- `qwen_mlx_learning_project.md` — Phase 3 deep-dive
+**Learning Paths** (read these in order as you progress):
+- `classical_ml_learning_path.md` — Phase 1 deep-dive (start here)
+- `complete_ml_learning_path_with_pretraining.md` — Phases 1-2: turns theory into transformer + pretraining
+- `qwen_mlx_learning_project.md` — Phase 3: LoRA fine-tuning with MLX
 - `GETTING_STARTED_PLAN.md` — Day-1 setup walkthrough
 - `QUICK_REFERENCE.md` — Cheat sheet for the whole path
 
@@ -435,7 +435,6 @@ from mlx_lm import load
 - 💬 **Discussions**: Use GitHub Discussions for questions
 - 🐛 **Issues**: Report bugs or unclear instructions
 - ⭐ **Star**: If this helps you, star the repo!
-- 🍴 **Fork**: Adapt for your learning style
 
 ### Contributing
 
@@ -482,7 +481,7 @@ git push origin feature/your-improvement
 - 📚 21 hands-on projects (17 core + 4 bridges: 11.5, 11.75, 12.1, 12.25)
 - 💻 21 Jupyter notebooks
 - 🛠️ 5 utility modules (`utils/`)
-- 📖 4 detailed learning-path markdown docs + glossary + getting-started
+- 📖 5 detailed markdown guides + glossary
 - ⏱️ ~180-220 hours of hands-on coding
 - 🎓 ~4-5 months at recommended cadence
 

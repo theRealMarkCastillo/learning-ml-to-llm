@@ -403,8 +403,8 @@ Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 
 **What to Build**:
 - Load Qwen2.5-1.5B-Instruct
-- Prepare instruction dataset (~10k examples)
-- Set up LoRA (rank 32, using concepts from Project 14)
+- Prepare instruction dataset (toy dataset for smoke test, ~10k for a real run)
+- Set up LoRA (rank 8, alpha 16 by default — concepts from Project 14)
 - Training loop (same fundamentals as pretraining, but constrained)
 - Evaluate before/after
 
@@ -447,7 +447,7 @@ Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 **Why This Matters**: This is the kind of analysis you'd want to do for your AI safety research. Understanding how fine-tuning changes model behavior is valuable.
 
 **Potential Experiments**:
-- Test on pseudoscientific requests (from your earlier research)
+- Test on edge-case prompts (e.g., ambiguous, conflicting, or unsafe requests)
 - Compare epistemic confidence before/after tuning
 - Analyze how instruction-tuning affects reasoning
 - Document edge cases
@@ -458,7 +458,7 @@ Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 
 ## Complete Learning Timeline
 
-### Phase 1: Classical ML (8-12 weeks)
+### Phase 1: Classical ML (10-14 weeks)
 - Projects 1-11: Gradient descent, algorithms, evaluation
 
 ### Phase 2: Transformers & Pretraining (4-6 weeks)
@@ -469,11 +469,11 @@ Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 - Project 14: Pretrain tiny model (this is the centerpiece)
 - Project 15: Analyze pretrained vs random
 
-### Phase 3: Real LLM Fine-tuning (4-6 weeks)
+### Phase 3: Real LLM Fine-tuning (2-4 weeks)
 - Project 16: Instruction tune Qwen2.5-1.5B-Instruct
 - Project 17: Comparative analysis and research
 
-**Total Timeline**: 16-24 weeks (~4-6 months) of engaged learning
+**Total Timeline**: 18-22 weeks (~4-5 months) of engaged learning
 
 This is not fast, but it builds genuine understanding layer by layer.
 

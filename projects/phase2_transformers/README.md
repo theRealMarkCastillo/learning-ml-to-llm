@@ -12,7 +12,6 @@ Isolate attention mechanism before full transformer:
 - Causal masking for autoregressive generation
 - Visualize attention weights to understand learned patterns
 - Why attention has better gradient flow than RNNs
-- ✨ Enhanced: Exercises on attention weight analysis, head specialization, gradient flow comparison
 
 ### Project 12.25: Embeddings & Representation Learning ⭐
 Learn word/token embeddings via Word2Vec skip-gram:
@@ -21,7 +20,6 @@ Learn word/token embeddings via Word2Vec skip-gram:
 - Visualization of learned semantic space (PCA 2D)
 - Connection to transformer token embeddings
 - Why embeddings are learned, not fixed one-hot
-- ✨ Enhanced: Exercises on skip-gram variants, subword semantics, embedding arithmetic
 
 ## Main Projects (Weeks 13-17)
 
@@ -31,7 +29,6 @@ Build decoder-only transformer from scratch:
 - Feed-forward networks
 - Positional embeddings
 - Stacking transformer blocks
-- ✨ Enhanced: Full project intro covering architecture assembly, exercises on scaling and ablation studies
 
 ### Project 13: Tokenization (Week 14)
 Understand text preprocessing:
@@ -39,7 +36,6 @@ Understand text preprocessing:
 - Byte-pair encoding (BPE)
 - Special tokens and vocabulary
 - Data loader creation
-- ✨ Enhanced: Detailed intro, exercises comparing tokenization strategies and vocab trade-offs
 
 ### Project 14: Pretraining (Week 15-16) ⭐ CORE PROJECT
 Pretrain tiny transformer on Shakespeare:
@@ -47,22 +43,19 @@ Pretrain tiny transformer on Shakespeare:
 - Training loop and optimization
 - Loss dynamics observation
 - Text generation from trained model
-- **Runtime**: 4-12 hours on M4
-- ✨ Enhanced: Production-grade intro covering training loops, checkpointing, scaling laws; exercises on convergence and data efficiency
+- Runtime: 4-12 hours on Apple Silicon (or CUDA); slower on CPU
 
 ### Project 15: Analysis (Week 17)
 Compare pretrained vs random models:
 - Transfer learning effectiveness
 - Why pretraining matters
 - Fine-tuning vs training from scratch
-- ✨ Enhanced: Systematic evaluation framework with capability preservation checks and failure mode analysis
 
 ## Learning Outcomes
 - Deep understanding of transformer architecture
 - Experience with pretraining process
 - Insight into what base models learn
 - Foundation for understanding Qwen2.5 fine-tuning
-- ✨ Hands-on evaluation and analysis skills
 
 ## Hardware Requirements
 - Apple Silicon (M1+) with MLX: ✓ ideal, ~3GB peak

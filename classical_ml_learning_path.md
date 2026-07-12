@@ -621,7 +621,7 @@ Working systematically through all projects (not rushing):
 - Project 10 (Feature Engineering): 1 week.
 - Project 11 (End-to-End): 2-3 weeks.
 
-Total: 8-12 weeks before moving to Qwen2.5/LLM training.
+Total: 10-14 weeks of engaged learning (10-20 hours/week).
 
 ---
 

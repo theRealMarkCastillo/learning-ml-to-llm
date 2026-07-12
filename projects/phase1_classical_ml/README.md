@@ -28,7 +28,6 @@ Build foundational ML concepts from first principles before moving to deep learn
   - Derives and codes backpropagation
   - Compares to logistic regression on non-linear data
   - Prepares intuition before building transformers
-  - ✨ Enhanced: Full exercises on architecture variation, learning rate sensitivity
 
 ### Project 11.75: Bridge to Sequences ⭐
 - **Project 11.75**: Recurrent Neural Networks from Scratch - BPTT, vanishing gradients
@@ -37,17 +36,15 @@ Build foundational ML concepts from first principles before moving to deep learn
   - Analyzes gradient flow: eigenvalue analysis of Whh matrix
   - Demonstrates why transformers with attention solve recurrence problem
   - Intuition for sequence modeling before full transformer
-  - ✨ Enhanced: Detailed exercises on LSTM implementation, gradient analysis, comparison to transformers
 
 ## Learning Outcomes
 - Deep understanding of optimization and gradient descent
 - Mastery of loss functions and regularization
 - Proper evaluation and experimental design
 - Foundation for understanding LLM training
-- ✨ Hands-on experimentation through structured exercises
 
 ## Time Estimate
-8-12 weeks of engaged learning (10-20 hours/week)
+10-14 weeks of engaged learning (10-20 hours/week)
 
 ## Getting Started
 

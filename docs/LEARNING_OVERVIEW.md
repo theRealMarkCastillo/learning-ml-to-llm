@@ -37,8 +37,8 @@ Architecture Extension | Transformer internals, scaling | 12–14
 ## Learning Flow (Condensed)
 Phase | Focus | Mental Shift
 ------|-------|-------------
-Classical ML (1–11) | Optimization & evaluation fundamentals | "I can reason about loss surfaces." |
-Transformer Construction (12–13) | Architecture + data interface | "I know what a block actually computes." |
+Classical ML (1–11 + bridges 11.5, 11.75) | Optimization & evaluation fundamentals | "I can reason about loss surfaces." |
+Transformer Construction (12.1, 12.25, 12–13) | Architecture + data interface | "I know what a block actually computes." |
 Tiny Pretraining (14–15) | Dynamics & transfer | "I’ve watched a model learn language." |
 Instruction Tuning (16–17) | Adaptation & behavioral analysis | "I can specialize and measure effects." |
 
