@@ -67,7 +67,7 @@ By completing this journey, you'll deeply understand:
 
 ## Learning Path
 
-### Phase 1: Classical ML Foundation (Weeks 1-14)
+### Phase 1: Classical ML Foundation (Weeks 1-12)
 **Goal**: Master fundamental ML concepts before approaching deep learning
 
 **Projects 1-11**: Core foundations
@@ -89,7 +89,7 @@ By completing this journey, you'll deeply understand:
 
 [→ Phase 1 Details](projects/phase1_classical_ml/README.md)
 
-### Phase 2: Transformers & Pretraining (Weeks 13-20)
+### Phase 2: Transformers & Pretraining (Weeks 13-18)
 **Goal**: Build and pretrain a transformer to understand base models
 
 **Bridge Projects** (build intuition before assembly):
@@ -99,14 +99,14 @@ By completing this journey, you'll deeply understand:
 **Core Projects**:
 - Build transformer architecture from scratch
 - Tokenization and text preprocessing
-- **Pretrain tiny transformer on Shakespeare** (4-12 hours on M4)
+- **Pretrain tiny transformer on Shakespeare** (4-12 hours on Apple Silicon, similar on CUDA, slower on CPU)
 - Analyze pretrained vs random models
 
 **Key Learning**: Self-attention, multi-head attention, embeddings, pretraining dynamics, why base models work
 
 [→ Phase 2 Details](projects/phase2_transformers/README.md)
 
-### Phase 3: LLM Fine-tuning (Weeks 18-23)
+### Phase 3: LLM Fine-tuning (Weeks 19-22)
 **Goal**: Fine-tune Qwen2.5-1.5B-Instruct and analyze behavior changes
 
 **Projects**:
@@ -194,7 +194,7 @@ See `utils/device.py` for details and helper functions (`backend_name`, `move_to
 
 ```bash
 # Clone this repository
-git clone https://github.com/yourusername/learning-ml-to-llm.git
+git clone https://github.com/<owner>/learning-ml-to-llm.git
 cd learning-ml-to-llm
 
 # Automated setup (recommended)
@@ -234,7 +234,7 @@ jupyter notebook
 Work through projects sequentially:
 1. Complete the notebook
 2. Run all experiments
-3. Document learnings in `PROGRESS_LOG.md`
+3. Document learnings in your own notes
 4. Move to next project
 
 **🎉 You're ready to start learning!**
@@ -244,30 +244,35 @@ Work through projects sequentially:
 ```
 learning-ml-to-llm/
 ├── projects/
-│   ├── phase1_classical_ml/       # Projects 1-11 (with 4.5, 6.5, 7.5, 7.8)
-│   ├── phase2_transformers/       # Projects 12-15 (with 12.5, 13.5)
-│   └── phase3_llm_tuning/        # Projects 16-17
+│   ├── phase1_classical_ml/       # Projects 1-11 + bridges 11.5, 11.75
+│   ├── phase2_transformers/       # Bridges 12.1, 12.25 + projects 12-15
+│   └── phase3_llm_tuning/         # Projects 16-17
 ├── docs/
-│   ├── GLOSSARY.md               # ML terminology reference
-│   ├── LEARNING_OVERVIEW.md      # Learning strategy guide
-│   ├── TESTING_GUIDE.md          # ML testing patterns & practices
-│   ├── MLOPS_PROFESSIONAL_GUIDE.md      # Experiment tracking, A/B testing, monitoring
-│   ├── RESPONSIBLE_AI_GUIDE.md   # Bias, fairness, explainability, privacy
-│   └── PROFESSIONAL_TOPICS_OVERVIEW.md  # Integration & timeline
+│   ├── GLOSSARY.md                # ML terminology reference
+│   └── LEARNING_OVERVIEW.md       # Learning strategy guide
 ├── utils/
-│   ├── visualization.py          # Plotting utilities
-│   ├── data_generators.py        # Data generation
-│   └── metrics.py                # Evaluation metrics
+│   ├── path_helpers.py            # Repo-root discovery (no hard-coded paths)
+│   ├── device.py                  # Backend auto-detect (MLX / CUDA / MPS / CPU)
+│   ├── visualization.py           # Plotting utilities
+│   ├── data_generators.py         # Synthetic data generation
+│   └── metrics.py                 # Evaluation metrics
 ├── data/
-│   ├── raw/                      # Raw datasets
-│   └── processed/                # Processed data
+│   ├── raw/                       # Raw datasets
+│   └── processed/                 # Processed data
 ├── scripts/
-│   ├── setup_environment.sh      # Setup script
-│   └── download_shakespeare.py   # Download training data
-├── requirements.txt              # Python dependencies
-├── GETTING_STARTED_PLAN.md      # Detailed getting started guide
-├── PROGRESS_LOG.md              # Learning progress tracking
-└── README.md                    # This file
+│   ├── setup_environment.sh       # Setup script
+│   ├── download_shakespeare.py    # Download training data
+│   ├── verify_device.py           # Verify backend selection
+│   └── verify_repo.sh             # Sanity-check repo structure
+├── tests/                         # pytest suite for utils + extracted modules
+├── requirements.txt               # Python dependencies
+├── classical_ml_learning_path.md         # Phase 1 deep-dive
+├── complete_ml_learning_path_with_pretraining.md  # Phases 1-2 deep-dive
+├── qwen_mlx_learning_project.md   # Phase 3 deep-dive
+├── GETTING_STARTED_PLAN.md        # Day-1 setup walkthrough
+├── QUICK_REFERENCE.md             # Cheat sheet
+├── CONTRIBUTING.md                # Repo conventions
+└── README.md                      # This file
 ```
 
 ## 💻 Hardware Requirements
@@ -276,13 +281,13 @@ learning-ml-to-llm/
 - **CPU**: Any modern processor
 - **RAM**: 4-8GB
 - **Storage**: 5GB
-- **OS**: macOS, Linux, or Windows
+- **OS**: macOS, Linux, or Windows (CPU); Linux/macOS for Phase 2+ acceleration
 
 ### Recommended Specs (All Phases)
-- **CPU**: Apple Silicon (M1/M2/M3/M4) or modern x86
-- **RAM**: 16-32GB for Phase 3 (Qwen2.5 fine-tuning)
+- **CPU**: Apple Silicon (M1/M2/M3/M4) or modern x86 with CUDA GPU
+- **RAM**: 16GB+ (Apple Silicon unified memory is fine)
 - **Storage**: 20GB
-- **OS**: macOS (for MLX optimization) or Linux
+- **Accelerator**: MLX on Apple Silicon, or CUDA GPU on Linux (8GB+ VRAM)
 
 ### What Runs Where
 
@@ -291,11 +296,9 @@ learning-ml-to-llm/
 | Phase 1 | Classical ML (1-11) | Seconds-Minutes | 2-4GB |
 | Phase 2 | Build Transformer (12-13) | Minutes | 1-2GB |
 | Phase 2 | Pretrain Tiny Model (14) | 4-12 hours | 3-8GB |
-| Phase 3 | Fine-tune Qwen2.5 (16) | Hours | 8-12GB |
+| Phase 3 | Fine-tune Qwen2.5 (16) | Hours | 4-8GB |
 
-**Good news**: Phases 1-2 run on any laptop. Only Phase 3 needs serious hardware.
-
-**Apple Silicon users**: MLX makes your Mac perfect for all phases!
+**Good news**: Phases 1-2 run on any laptop. Phase 3 wants a real accelerator but the model is small enough that 8GB is enough.
 
 ## Learning Approach
 
@@ -309,31 +312,25 @@ learning-ml-to-llm/
 ### Daily Commitment
 - **Minimum**: 1-2 hours/day, 5 days/week
 - **Recommended**: 2-3 hours/day, 5-6 days/week
-- **Total timeline**: 19-23 weeks (~4-6 months)
+- **Total timeline**: 18-22 weeks (~4-5 months)
 
 ## Progress Tracking
 
-Track your progress in `PROGRESS_LOG.md`:
-- Projects completed
-- Key insights learned
-- Challenges encountered
-- Experimental results
+Keep your own notes as you go — a private learning journal, a git branch per project, or whatever fits your style. There is no required progress log file; do whatever helps you reflect.
 
 ## Resources
 
 ### Included Documents
 
-**Learning Paths**:
-- `classical_ml_learning_path.md` - Detailed Phase 1 guide (Projects 1-11)
-- `complete_ml_learning_path_with_pretraining.md` - Full journey (Projects 12-17)
-- `qwen_mlx_learning_project.md` - MLX fine-tuning guide
-- `GETTING_STARTED_PLAN.md` - Step-by-step setup
+**Learning Paths** (pick one and follow it end-to-end):
+- `classical_ml_learning_path.md` — Detailed Phase 1 guide (Projects 1-11)
+- `complete_ml_learning_path_with_pretraining.md` — Phases 1-2 deep-dive
+- `qwen_mlx_learning_project.md` — Phase 3 deep-dive
+- `GETTING_STARTED_PLAN.md` — Day-1 setup walkthrough
+- `QUICK_REFERENCE.md` — Cheat sheet for the whole path
 
-**Professional Development Guides** (in `docs/`):
-- `TESTING_GUIDE.md` - ML testing patterns, pytest, CI/CD
-- `MLOPS_PROFESSIONAL_GUIDE.md` - Experiment tracking, A/B testing, monitoring
-- `RESPONSIBLE_AI_GUIDE.md` - Bias detection, fairness, explainability, privacy
-- `PROFESSIONAL_TOPICS_OVERVIEW.md` - Integration guide and timeline
+**Reference**:
+- `docs/GLOSSARY.md` — A→Z terminology reference (heavily cross-linked from notebooks)
 
 ### External Resources (Recommended)
 - **StatQuest** - Intuitive ML explanations
@@ -442,7 +439,7 @@ from mlx_lm import load
 
 ### Contributing
 
-Found a bug? Have an improvement? Contributions welcome!
+Found a bug? Have an improvement? See `CONTRIBUTING.md` for the conventions.
 
 ```bash
 # Fork the repo
@@ -450,6 +447,8 @@ Found a bug? Have an improvement? Contributions welcome!
 git checkout -b feature/your-improvement
 
 # Make changes and test
+pytest tests/
+
 # Commit and push
 git commit -m "Add: your improvement"
 git push origin feature/your-improvement
@@ -461,8 +460,7 @@ git push origin feature/your-improvement
 - Fixing errors in notebooks
 - Adding visualizations
 - Improving documentation
-- Adding new experiments
-- Sharing your learning insights
+- Reporting broken cross-references between docs
 
 ## 🙏 Acknowledgments
 
@@ -481,12 +479,12 @@ git push origin feature/your-improvement
 ## 📊 Learning Statistics
 
 **Curriculum Stats**:
-- 📚 20+ comprehensive projects (17 core + 4 professional extension projects)
-- 💻 20+ Jupyter notebooks
-- 🛠️ 3 utility modules with 30+ functions
-- 📖 10 detailed documentation files (6 learning paths + 4 professional guides)
-- ⏱️ ~200-250 hours of hands-on coding (150-200 core + 40-60 professional)
-- 🎓 4-7 months total learning time (19-23 weeks core + 4-7 weeks professional topics)
+- 📚 21 hands-on projects (17 core + 4 bridges: 11.5, 11.75, 12.1, 12.25)
+- 💻 21 Jupyter notebooks
+- 🛠️ 5 utility modules (`utils/`)
+- 📖 4 detailed learning-path markdown docs + glossary + getting-started
+- ⏱️ ~180-220 hours of hands-on coding
+- 🎓 ~4-5 months at recommended cadence
 
 **Difficulty Progression**:
 ```
@@ -528,7 +526,7 @@ Difficulty
 ### This Week (10-15 hours)
 - [ ] Complete Project 1: Linear Regression
 - [ ] Experiment with different learning rates
-- [ ] Document insights in `PROGRESS_LOG.md`
+- [ ] Note your insights (in your own notes)
 - [ ] Start Project 2: Logistic Regression
 
 ### This Month (40-60 hours)
@@ -537,10 +535,10 @@ Difficulty
 - [ ] Understand loss functions deeply
 
 ### In 3 Months (Phase 1 Complete)
-- [ ] Finish all classical ML projects (1-11)
+- [ ] Finish all classical ML projects (1-11) plus bridges (11.5, 11.75)
 - [ ] Ready for transformer architecture
 
-### In 6 Months (All Phases)
+### In 5 Months (All Phases)
 - [ ] Built transformer from scratch
 - [ ] Pretrained your own model
 - [ ] Fine-tuned Qwen2.5-1.5B-Instruct
@@ -592,7 +590,7 @@ Take your time. Enjoy the process. Build something amazing.
 
 **Ready to start your ML journey?**
 
-[📚 Read Getting Started Guide](GETTING_STARTED_PLAN.md) | [🚀 Start Project 1](projects/phase1_classical_ml/project01_linear_regression/) | [⭐ Star This Repo](../../stargazers)
+[📚 Read Getting Started Guide](GETTING_STARTED_PLAN.md) | [🚀 Start Project 1](projects/phase1_classical_ml/project01_linear_regression/)
 
 **Happy Learning! 🎓✨**
 

@@ -60,7 +60,7 @@ Every substantial experiment should capture:
 5. Interpretation (what changed, hypothesized causes)
 6. Next action (planned adjustment or closure)
 
-Reuse `PROGRESS_LOG.md` for weekly summaries; add a short appendix in major notebooks with a “Findings & Reflections” section.
+Use whatever note-taking style fits you — a private journal, a git branch per project, or a "Findings & Reflections" section appended to each notebook.
 
 ## Suggested Weekly Cadence
 Day | Activity | Outcome

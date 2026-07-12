@@ -5,17 +5,21 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# Ensure repo root is on sys.path for imports
-_repo_root = None
-for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
-    if (candidate / "requirements.txt").exists():
-        _repo_root = candidate
-        if str(_repo_root) not in sys.path:
-            sys.path.insert(0, str(_repo_root))
-        break
+import numpy as np
+import pytest
 
-# Add project dir for the extracted module
-_proj_dir = _repo_root / "projects" / "phase1_classical_ml" / "project11_5_neural_networks"
+# Resolve the project dir so we can import the extracted module.
+# (We can't import the helper here because that would create a cycle
+# with the conftest fixture; resolve via Path walking instead.)
+def _resolve_neural_network_path() -> Path:
+    for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
+        candidate_path = candidate / "projects" / "phase1_classical_ml" / "project11_5_neural_networks"
+        if (candidate_path / "neural_network.py").exists():
+            return candidate_path
+    raise FileNotFoundError("Could not locate project11_5_neural_networks")
+
+
+_proj_dir = _resolve_neural_network_path()
 _proj_str = str(_proj_dir)
 if _proj_str not in sys.path:
     sys.path.insert(0, _proj_str)
@@ -28,8 +32,6 @@ from neural_network import (
     sigmoid_derivative,
     softmax,
 )
-import numpy as np
-import pytest
 
 
 # ---------------------------------------------------------------------------

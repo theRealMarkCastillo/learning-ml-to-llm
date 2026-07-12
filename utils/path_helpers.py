@@ -29,15 +29,20 @@ def find_repo_root(start: Optional[Path] = None, markers: Iterable[str] = ("requ
 
 
 def add_repo_root_to_sys_path(start: Optional[Path] = None) -> Optional[Path]:
-    """Find the repo root and insert it at the front of sys.path if missing.
+    """Find the repo root and insert it at the front of sys.path.
 
-    Returns the repo root Path or None if not found.
+    The root is unconditionally placed at the front so callers can rely on
+    ``sys.path[0]`` pointing at the repo, but it is not duplicated if it is
+    already at the front. Returns the repo root Path or None if not found.
     """
     root = find_repo_root(start=start)
     if root is not None:
         root_str = str(root)
-        if root_str not in sys.path:
-            sys.path.insert(0, root_str)
+        try:
+            sys.path.remove(root_str)
+        except ValueError:
+            pass
+        sys.path.insert(0, root_str)
     return root
 
 

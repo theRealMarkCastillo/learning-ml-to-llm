@@ -65,8 +65,10 @@ Compare pretrained vs random models:
 - ✨ Hands-on evaluation and analysis skills
 
 ## Hardware Requirements
-- M4 Mac with 64GB RAM: ✓ Perfect
-- Training time: 4-12 hours for tiny model
+- Apple Silicon (M1+) with MLX: ✓ ideal, ~3GB peak
+- Linux + CUDA GPU: ✓ works, similar memory profile
+- CPU-only: works but Project 14 takes much longer
+- Training time: 4-12 hours for tiny model (accelerator-dependent)
 - Memory usage: ~3GB during training
 
 ## Time Estimate

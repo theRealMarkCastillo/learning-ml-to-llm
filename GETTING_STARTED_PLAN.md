@@ -15,8 +15,8 @@ which python3
 
 **Create Dedicated Virtual Environment:**
 ```bash
-# Navigate to your project directory
-cd ~/git/learning-ml-to-llm
+# Navigate to your project directory (use whatever path you cloned to)
+cd <your-clone-path>/learning-ml-to-llm
 
 # Create virtual environment
 python3 -m venv venv
@@ -28,85 +28,29 @@ source venv/bin/activate
 pip install --upgrade pip
 ```
 
-**Add to your `.zshrc` for easy activation:**
+**Optional: add an alias to your shell rc:**
 ```bash
-echo 'alias mlenv="cd ~/git/learning-ml-to-llm && source venv/bin/activate"' >> ~/.zshrc
+# Adjust the path to wherever you cloned the repo
+echo 'alias mlenv="cd <your-clone-path>/learning-ml-to-llm && source venv/bin/activate"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### Step 2: Install Core Dependencies
+### Step 2: Install Dependencies
 
-**Classical ML Libraries:**
+The repo ships a pinned `requirements.txt` with everything you need.
+Run `./scripts/setup_environment.sh` (recommended) or install manually:
+
 ```bash
-pip install numpy scipy scikit-learn pandas matplotlib seaborn jupyter ipykernel
+pip install -r requirements.txt
 ```
 
-**Deep Learning Libraries (for later phases):**
-```bash
-pip install torch torchvision torchaudio
-pip install mlx mlx-lm  # Apple MLX for M4 optimization
-```
+For Apple Silicon Phase 3 acceleration, the setup script also installs
+`mlx` and `mlx-lm` automatically.
 
-**Development Tools:**
-```bash
-pip install ipython black flake8 pytest
-```
+### Step 3: Project Structure
 
-**Verify Installation:**
-```bash
-python3 -c "import numpy, sklearn, pandas, matplotlib; print('All core libraries installed!')"
-```
-
-### Step 3: Project Structure Setup
-
-**Create directory structure:**
-```bash
-mkdir -p projects/phase1_classical_ml/{project01_linear_regression,project02_logistic_regression,project03_multiclass,project04_regularization}
-mkdir -p projects/phase1_classical_ml/{project05_decision_trees,project06_random_forests,project07_classification_metrics}
-mkdir -p projects/phase1_classical_ml/{project08_cross_validation,project09_svm,project10_feature_engineering,project11_ml_pipeline}
-mkdir -p projects/phase2_transformers/{project12_transformer_architecture,project13_tokenization,project14_pretraining,project15_analysis}
-mkdir -p projects/phase3_llm_tuning/{project16_qwen_tuning,project17_comparative_analysis}
-mkdir -p data/{raw,processed}
-mkdir -p notebooks
-mkdir -p utils
-```
-
-**Create a requirements.txt:**
-```bash
-cat > requirements.txt << 'EOF'
-# Core Scientific Computing
-numpy>=1.24.0
-scipy>=1.10.0
-pandas>=2.0.0
-
-# Machine Learning
-scikit-learn>=1.3.0
-
-# Visualization
-matplotlib>=3.7.0
-seaborn>=0.12.0
-
-# Jupyter
-jupyter>=1.0.0
-ipykernel>=6.25.0
-ipywidgets>=8.0.0
-
-# Deep Learning
-torch>=2.0.0
-mlx>=0.0.5
-mlx-lm>=0.0.5
-
-# Development Tools
-ipython>=8.14.0
-black>=23.0.0
-flake8>=6.0.0
-pytest>=7.4.0
-
-# Additional utilities
-tqdm>=4.65.0
-pyyaml>=6.0
-EOF
-```
+The project directories already exist in the repo — you don't need to
+create them. Just `cd` into the one for your current project.
 
 ### Step 4: Configure Jupyter
 
@@ -223,103 +167,63 @@ plt.show()
 
 ### Progress Tracking
 
-**Create a progress log:**
-```bash
-touch PROGRESS_LOG.md
-```
+There's no required progress log file. Use whatever helps you reflect:
+a private journal, a git branch per project, or notes inside the notebooks
+themselves.
 
-**Log template:**
-```markdown
-## [Date] - Project [N]: [Name]
+## Phase 4: Utilities and Helper Functions (already in the repo)
 
-### What I Built:
-- 
+`utils/` ships five ready-to-use modules:
 
-### Key Concepts Learned:
-- 
+- `utils/visualization.py` — loss curves, decision boundaries, confusion matrices, learning-rate comparisons, parameter trajectories
+- `utils/data_generators.py` — linear, polynomial, binary, multiclass, sine-wave synthetic data
+- `utils/metrics.py` — regression and classification metrics implemented from scratch
+- `utils/device.py` — auto-detects MLX / CUDA / MPS / CPU and gives you a unified `get_device()` / `tensor()` / `ensure_seed()`
+- `utils/path_helpers.py` — locates the repo root so notebooks work from any subfolder without hard-coded paths
 
-### Challenges Encountered:
-- 
-
-### Insights:
-- 
-
-### Next Steps:
-- 
-```
-
-## Phase 4: Utilities and Helper Functions (Build as You Go)
-
-### Create `utils/visualization.py`
-Common plotting functions to reuse:
-- Loss curves
-- Decision boundaries
-- Confusion matrices
-- Learning rate effects
-
-### Create `utils/data_generators.py`
-Synthetic data generation:
-- Linear data
-- Classification data
-- Complex patterns
-
-### Create `utils/metrics.py`
-Custom metric implementations:
-- Before using sklearn versions
-- To understand deeply
-
-## Phase 5: Resource Management on M4
+## Phase 5: Resource Management
 
 ### Memory Monitoring
 ```bash
-# Check system resources
-top -l 1 | grep PhysMem
+# macOS / Linux: check available memory
+free -h                              # Linux
+vm_stat | head                       # macOS
 ```
 
-### MLX Optimization Tips (for later phases)
+### Backend Selection (for later phases)
+
+The repo's `utils.device` module auto-detects the best available
+backend (MLX → CUDA → MPS → CPU) and exposes it via `get_device()`.
+
 ```python
-# MLX automatically uses unified memory efficiently
-import mlx.core as mx
-
-# Check MLX device
-print(mx.default_device())
+from utils.device import backend_info, get_device, ensure_seed
+print(backend_info())
+ensure_seed(42)
 ```
 
-### Training Performance
-- Your M4 with 64GB RAM is excellent for all exercises
-- Classical ML: seconds to minutes
-- Tiny transformer pretraining: 4-12 hours
-- Qwen2.5 fine-tuning: hours per run
+Override with `LEARNING_ML_BACKEND=cpu` (or `mlx` / `cuda` / `mps`).
+
+### Training Performance (rough)
+
+- Classical ML: seconds to minutes on any laptop
+- Tiny transformer pretraining: 4-12 hours on Apple Silicon or CUDA
+- Qwen2.5 fine-tuning: hours per run on Apple Silicon (MLX) or CUDA
 
 ## Phase 6: Checkpoint Strategy
 
 ### After Each Project
 1. **Save notebooks** with outputs
-2. **Export to Python scripts** for reusable code
-3. **Document in PROGRESS_LOG.md**
-4. **Tag learnings** for future reference
-5. **Commit to git** (you're already in a repo)
+2. **Export to Python scripts** for reusable code (only when the project explicitly does so — most notebooks stay as notebooks)
+3. **Keep your own notes** on what surprised you or what you'd revisit
+4. **Commit to git** (you're already in a repo)
 
 ### Git Workflow
+The repo ships a comprehensive `.gitignore` that covers venvs, checkpoints,
+and notebook artifacts. Just `git add` and `git commit` normally:
+
 ```bash
-# Initialize if not already
-git init
-
-# Create .gitignore
-cat > .gitignore << 'EOF'
-venv/
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
-.DS_Store
-*.pt
-*.pth
-checkpoints/
-EOF
-
-# Regular commits
-git add .
-git commit -m "Complete Project N: [Name]"
+git add projects/
+git commit -m "Complete Project N: Name"
 ```
 
 ## Phase 7: Learning Resources
@@ -395,8 +299,10 @@ python3 -c "import mlx.core as mx; print(mx.__version__)"
 
 Once setup is complete:
 ```bash
-# Activate environment and start Jupyter
+# If you added the alias above
 mlenv
+# Otherwise, from your clone:
+source venv/bin/activate
 cd projects/phase1_classical_ml/project01_linear_regression
 jupyter notebook
 ```
@@ -448,13 +354,9 @@ jupyter notebook
 - Experiment systematically
 - Document thoroughly
 
-**Your Advantage:** M4 with 64GB RAM means no hardware limitations. Use this to:
-- Run experiments freely
-- Try different configurations
-- Keep multiple notebooks open
-- Train larger models in later phases
+**Hardware note:** Apple Silicon (M1+) with MLX is the smoothest path through the curriculum, especially for Phase 3. Linux + CUDA works too. CPU-only works but is slower for Project 14 (pretraining) and Phase 3.
 
-**Research Connection:** As you learn, think about how concepts relate to AI safety:
+**Research connection:** As you learn, think about how concepts relate to AI safety:
 - How do models generalize?
 - What causes memorization vs learning?
 - How does fine-tuning change behavior?
@@ -468,11 +370,10 @@ This learning path positions you to do rigorous AI safety research with deep tec
 
 Run this command to get started:
 ```bash
-cd ~/git/learning-ml-to-llm
-python3 -m venv venv
+cd <your-clone-path>/learning-ml-to-llm
+./scripts/setup_environment.sh
 source venv/bin/activate
-pip install --upgrade pip
-pip install numpy scipy scikit-learn pandas matplotlib seaborn jupyter ipykernel
+jupyter notebook
 ```
 
-Then create your first project notebook and begin!
+Then open `projects/phase1_classical_ml/project01_linear_regression/linear_regression_from_scratch.ipynb` and begin.

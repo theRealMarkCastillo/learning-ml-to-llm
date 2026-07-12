@@ -5,20 +5,23 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# Ensure repo root is on sys.path
-_repo_root = None
-for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
-    if (candidate / "requirements.txt").exists():
-        _repo_root = candidate
-        if str(_repo_root) not in sys.path:
-            sys.path.insert(0, str(_repo_root))
-        break
+import numpy as np
+import pytest
+import torch
 
-# Add project dir for the extracted module
-_proj_dir = (
-    _repo_root / "projects" / "phase2_transformers"
-    / "project12_transformer_architecture"
-)
+
+def _resolve_transformer_path() -> Path:
+    for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
+        candidate_path = (
+            candidate / "projects" / "phase2_transformers"
+            / "project12_transformer_architecture"
+        )
+        if (candidate_path / "transformer.py").exists():
+            return candidate_path
+    raise FileNotFoundError("Could not locate project12_transformer_architecture")
+
+
+_proj_dir = _resolve_transformer_path()
 _proj_str = str(_proj_dir)
 if _proj_str not in sys.path:
     sys.path.insert(0, _proj_str)
@@ -31,9 +34,6 @@ from transformer import (
     TransformerBlock,
     scaled_dot_product_attention,
 )
-import numpy as np
-import pytest
-import torch
 
 
 # ---------------------------------------------------------------------------

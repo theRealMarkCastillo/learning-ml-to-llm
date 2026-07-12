@@ -32,10 +32,11 @@ Systematic comparison of base vs tuned:
 - ✨ Production-ready deployment understanding
 
 ## Hardware Requirements
-- M4 Mac with 64GB RAM: ✓ Perfect
+- Apple Silicon (M1+) with MLX: ✓ ideal, ~4-6GB peak
+- Linux + CUDA GPU (8GB+ VRAM): ✓ works, similar profile
 - Memory usage: ~4-6GB peak
-- Training time: Minutes per run
-- MLX optimized for Apple silicon
+- Training time: minutes per run
+- Backend auto-selected via `utils.device`
 
 ## Connection to Research
 This phase directly supports AI safety research:

@@ -2,17 +2,6 @@
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-_repo_root = None
-for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
-    if (candidate / "requirements.txt").exists():
-        _repo_root = candidate
-        if str(_repo_root) not in sys.path:
-            sys.path.insert(0, str(_repo_root))
-        break
-
 import numpy as np
 import pytest
 import matplotlib

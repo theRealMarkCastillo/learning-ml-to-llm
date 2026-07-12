@@ -2,22 +2,17 @@
 
 from __future__ import annotations
 
-import os
 import sys
-from pathlib import Path
 
 import pytest
 
-# Ensure repo root is importable
-_repo_root = None
-for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
-    if (candidate / "requirements.txt").exists():
-        _repo_root = candidate
-        if str(_repo_root) not in sys.path:
-            sys.path.insert(0, str(_repo_root))
-        break
-
 from utils.path_helpers import add_repo_root_to_sys_path, find_repo_root
+
+
+@pytest.fixture
+def _repo_root():
+    """Resolve repo root once per test (re-uses the helper under test indirectly)."""
+    return add_repo_root_to_sys_path()
 
 
 # ---------------------------------------------------------------------------
@@ -28,12 +23,12 @@ from utils.path_helpers import add_repo_root_to_sys_path, find_repo_root
 class TestFindRepoRoot:
     """Test repository root detection."""
 
-    def test_finds_current_repo(self):
+    def test_finds_current_repo(self, _repo_root):
         result = find_repo_root(start=_repo_root)
         assert result is not None
         assert result == _repo_root
 
-    def test_uses_markers(self):
+    def test_uses_markers(self, _repo_root):
         result = find_repo_root(start=_repo_root, markers=(".git",))
         assert result is not None
         assert result == _repo_root
@@ -63,16 +58,18 @@ class TestAddRepoRootToSysPath:
             assert str(result) in sys.path
 
     def test_inserts_at_front(self):
+        """After calling, the repo root should be at sys.path[0]."""
         result = add_repo_root_to_sys_path()
         if result is not None:
-            assert str(result) in sys.path
+            assert sys.path[0] == str(result)
 
-    def test_already_in_sys_path(self):
-        root_str = str(_repo_root)
-        if root_str in sys.path:
-            before_count = sys.path.count(root_str)
+    def test_no_duplicates(self):
+        """Calling repeatedly should not duplicate the entry."""
+        result = add_repo_root_to_sys_path()
+        if result is not None:
+            before_count = sys.path.count(str(result))
             add_repo_root_to_sys_path()
-            after_count = sys.path.count(root_str)
+            after_count = sys.path.count(str(result))
             assert before_count == after_count
 
     def test_nonexistent_none(self, tmp_path):

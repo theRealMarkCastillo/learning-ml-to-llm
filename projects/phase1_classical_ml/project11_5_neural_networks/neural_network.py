@@ -86,7 +86,7 @@ class NeuralNetwork:
     task : str
         ``'binary'`` or ``'multiclass'``.
     use_gradient_clipping : bool
-        If ``True``, clip gradients to ``[−1, 1]`` before update.
+        If ``True``, clip gradients to ``[−5, 5]`` before update.
 
     Examples
     --------

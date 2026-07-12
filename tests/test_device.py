@@ -2,18 +2,6 @@
 
 from __future__ import annotations
 
-import os
-import sys
-from pathlib import Path
-
-_repo_root = None
-for candidate in [Path.cwd().resolve()] + list(Path.cwd().resolve().parents):
-    if (candidate / "requirements.txt").exists():
-        _repo_root = candidate
-        if str(_repo_root) not in sys.path:
-            sys.path.insert(0, str(_repo_root))
-        break
-
 import pytest
 
 from utils.device import (
@@ -24,6 +12,7 @@ from utils.device import (
     _materialize,
     backend_info,
     backend_name,
+    ensure_seed,
     get_backend,
     get_device,
     move_to,
@@ -130,10 +119,10 @@ class TestEnsureSeed:
 
     def test_seed_np_consistency(self, monkeypatch):
         """Seeding should make np.random deterministic."""
-        from utils.device import ensure_seed
+        import numpy as np
 
         ensure_seed(42)
-        r1 = __import__("numpy").random.randn(3)
+        r1 = np.random.randn(3)
         ensure_seed(42)
-        r2 = __import__("numpy").random.randn(3)
-        __import__("numpy").testing.assert_array_equal(r1, r2)
+        r2 = np.random.randn(3)
+        np.testing.assert_array_equal(r1, r2)

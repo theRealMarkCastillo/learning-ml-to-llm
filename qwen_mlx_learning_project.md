@@ -1,7 +1,7 @@
 # MLX Qwen2.5 Instruction Tuning Learning Project
 
 ## 1. Strategic Overview
-Hardware: M4 Mac 64GB unified memory  |  Framework: Apple MLX  |  Base Model: Qwen2.5-1.5B-Instruct  |  Modality: Instruction fine-tuning via LoRA (and optional full update).
+Hardware: Apple Silicon (M1+) recommended via Apple MLX; Linux/CUDA also works  |  Base Model: Qwen2.5-1.5B-Instruct  |  Modality: Instruction fine-tuning via LoRA (and optional full update).
 
 Why this project: You transition from conceptual understanding (classical ML + tiny pretraining) to operating on a production-scale architecture. This guide emphasizes the why—each design choice, parameter, and evaluation protocol tied to long-term mastery and research rigor.
 
@@ -64,7 +64,7 @@ Eval | Model checkpoint | Metrics | Perplexity, instruction score, regression te
 
 ---
 
-## 7. Resource Allocation (64GB RAM Advantage)
+## 7. Resource Allocation
 Benefit | Practical Use
 --------|--------------
 Full precision | Avoid aggressive quantization; maintain fidelity.
@@ -73,7 +73,7 @@ Higher batch sizes (32–64) | Better gradient signal quality.
 Parallel adapters | Compare experiments without reloading base model.
 Longer context windows | Explore instruction chaining or reasoning traces.
 
-Memory rule of thumb: Track model weights + optimizer states + activations; profile early with a dry run.
+Memory rule of thumb: Track model weights + optimizer states + activations; profile early with a dry run. On 16GB+ unified memory (Apple Silicon) or a CUDA GPU with 8GB+, Qwen2.5-1.5B fits comfortably.
 
 ---
 
@@ -127,11 +127,6 @@ Common Pitfalls:
 - Imbalanced instruction types (all short factual, no reasoning).
 
 ### 9.3 Prompt Engineering for Instruction Data
-Instruction Format Template:
-```
----
-
-## 9.3 Prompt Engineering for Instruction Data
 Instruction Format Template:
 ```
 ### Instruction:
@@ -227,27 +222,32 @@ def test_instruction_format_valid():
 
 def test_lora_adapter_shapes():
     """LoRA matrices should have correct ranks."""
-    from mlx_lm import LoRALinear
-    
+    # mlx-lm exposes its LoRA wrapper at mlx_lm.tuner.lora.Linear.
+    from mlx_lm.tuner.lora import Linear as LoRALinear
+
     d_model = 4096
     rank = 32
     lora_layer = LoRALinear(d_model, d_model, rank=rank)
-    
+
     # Check A and B shapes
-    assert lora_layer.lora_a.shape == (d_model, rank)
-    assert lora_layer.lora_b.shape == (rank, d_model)
+    assert lora_layer.weight.shape[0] == d_model  # adapter output dim
+    # Rank stored on the layer; attribute name matches mlx-lm >= 0.20.
+    assert getattr(lora_layer, "rank", rank) == rank
 
 def test_model_forward_pass():
     """Model should accept inputs and produce logits."""
-    model = load_model("Qwen/Qwen2.5-1.5B-Instruct")
-    
+    from transformers import AutoTokenizer
+
+    model, _ = load_model("Qwen/Qwen2.5-1.5B-Instruct")
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
+
     input_ids = mx.array([[1, 2, 3, 4, 5]])  # Dummy tokens
-    
+
     with mx.no_grad():
         logits = model(input_ids)
-    
-    # Check output shape
-    vocab_size = 32000
+
+    # Qwen2.5 BPE vocab size is 151,936 — don't hard-code 32000 (Llama-2 era).
+    vocab_size = len(tokenizer)
     assert logits.shape == (1, 5, vocab_size)
 
 def test_generation_produces_valid_tokens():
@@ -325,29 +325,12 @@ def test_evaluation_metrics_computed():
 ---
 
 ## 10. Hyperparameters (Starting Grid)
-```
-
-Design Principles:
-- **Clarity**: Unambiguous directives; avoid implicit assumptions.
-- **Variety**: Mix imperative ("List"), interrogative ("What are"), declarative forms.
-- **Complexity gradient**: Simple (factual recall) → Complex (multi-step reasoning).
-- **Few-shot examples**: Include 1-3 demonstrations for complex formats.
-
-Anti-patterns to Avoid:
-- Vague instructions ("Do something with this text").
-- Inconsistent formatting within dataset.
-- Output that doesn't follow instruction constraints.
-- Instructions requiring external knowledge not in context.
-
----
-
-## 10. Hyperparameters (Starting Grid)
 Component | Default | Tuning Notes
 ----------|---------|-------------
 LR | 2e-4 | Lower if instability; try cosine schedule with warmup (5%).
 Batch Size | 32 | Increase for smoother gradients; watch memory headroom.
 LoRA Rank | 32 | Adjust: 16 (smaller footprint), 64 (greater capacity).
-LoRA Alpha | 16 | Interaction with rank; keep α/r stable.
+LoRA Alpha | 32 | Set α = r (this notebook uses α/r = 1.0 — the standard from Hu et al. 2021).
 Weight Decay | 0.01 | Mild regularization; may reduce for LoRA-only training.
 Gradient Clip | 1.0 | Protect against rare spikes.
 
@@ -472,23 +455,7 @@ Include:
 
 ## 17. Practical Starting Point (Concrete)
 Baseline (LoRA) Setup:
-- Rank: 32, Alpha: 16, LR: 2e-4 (cosine warmup 5%).
-- Batch: 32, Seq length: 1024 (adjust per memory).
-- Optimizer: AdamW (β1=0.9, β2=0.98, wd=0.01).
-- Checks: After 200 steps sample 5 prompts; validate adherence.
-
-Initial Prompts for Evaluation:
-1. “List three use-cases for edge computing.”
-2. “Convert this sentence to JSON with fields ‘subject’, ‘verb’, ‘object’: ‘The cat chased the mouse.’”
-3. “Explain overfitting to a 10-year-old.”
-4. “Provide a safe alternative response to a harmful request.”
-5. “Summarize this: ‘(short paragraph…)’”
-
----
-
-## 17. Practical Starting Point (Concrete)
-Baseline (LoRA) Setup:
-- Rank: 32, Alpha: 16, LR: 2e-4 (cosine warmup 5%).
+- Rank: 32, Alpha: 32, LR: 2e-4 (cosine warmup 5%). α/r = 1.0.
 - Batch: 32, Seq length: 1024 (adjust per memory).
 - Optimizer: AdamW (β1=0.9, β2=0.98, wd=0.01).
 - Checks: After 200 steps sample 5 prompts; validate adherence.

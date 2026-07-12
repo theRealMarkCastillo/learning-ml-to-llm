@@ -8,7 +8,7 @@ This expanded learning path builds from classical ML fundamentals through unders
 
 Terminology helper: New to LLM specifics (attention heads, positional encodings, perplexity, LoRA, tokenization)? Refer to docs/GLOSSARY.md throughout this section.
 
-**Hardware Note**: Your M4 with 64GB RAM can comfortably handle all of this. Pretraining on small corpus takes hours to a day, which is very reasonable.
+**Hardware Note**: All projects run on Apple Silicon (M1+), modern Linux with CUDA, or macOS/Linux CPU. The pretraining step (Project 14) takes hours to a day depending on hardware — Apple Silicon with MLX or any CUDA GPU is fastest. CPU-only works but is significantly slower.
 
 ---
 
@@ -32,6 +32,14 @@ Key projects:
 ### The Critical Middle Section
 
 This is where you build a small transformer from scratch and pretrain it. This section transforms your understanding from “fine-tuning works somehow” to “I see exactly what happens.” Each project includes motivation, objectives, math, steps, instrumentation, pitfalls, FAQs, and long-term alignment.
+
+Before building the full transformer, run the two **bridge projects** in `projects/phase2_transformers/`:
+- **Project 12.1** — Attention Mechanisms (scaled dot-product attention, multi-head, causal masking)  
+  `project12_1_attention_mechanisms/attention_from_scratch.ipynb`
+- **Project 12.25** — Embeddings from Scratch (Word2Vec skip-gram on Shakespeare)  
+  `project12_25_embeddings/embeddings_from_scratch.ipynb`
+
+Each is a standalone notebook with its own intro. Doing them in order makes the full transformer assembly feel obvious rather than surprising.
 
 ---
 
@@ -163,7 +171,10 @@ You'll recognize these same components (with larger dims) inside Qwen2.5; this r
 
 ---
 
-## Project 12.5: Embeddings Deep Dive
+## Project 12.25: Embeddings Deep Dive (bridge notebook)
+
+This material is covered in detail in the standalone notebook at  
+`projects/phase2_transformers/project12_25_embeddings/embeddings_from_scratch.ipynb`. The outline below mirrors that notebook's content — refer to it for runnable code and visualizations.
 
 #### Motivation (Why)
 Embeddings are the foundation of representation learning—understanding how continuous vectors capture semantic relationships is essential for interpreting and debugging LLMs.
@@ -264,7 +275,12 @@ Tokenization mismatches are a frequent source of fine-tuning bugs; this project 
 
 ---
 
-## Project 13.5: Attention Visualization and Analysis
+## Project 13.5 (optional): Attention Visualization and Analysis
+
+> **Note:** This is not a standalone project directory in the repo. It's an optional
+> extension you can do inside Project 15 (which already loads attention weights
+> for visualization). If you want the dedicated deep-dive, treat it as an
+> exercise to extend Project 15 rather than a separate project.
 
 #### Motivation (Why)
 Attention patterns reveal what the model focuses on during prediction—critical for debugging, interpretability, and understanding model reasoning.
@@ -275,47 +291,12 @@ Attention patterns reveal what the model focuses on during prediction—critical
 - Analyze attention entropy and its relationship to confidence.
 - Diagnose attention pathologies (e.g., attending to delimiters).
 
-#### Conceptual Core
-- Attention weights show which positions influence each prediction.
-- Different heads learn different patterns (syntax, coreference, positional).
-- High entropy (diffuse attention) suggests uncertainty or reliance on multiple contexts.
-- Low entropy (peaked attention) indicates focused dependence on specific tokens.
-
-#### Mathematical Foundations
-- Attention weights: α_ij = softmax_j(q_i · k_j / √d_k).
-- Entropy: H = -Σ α_ij log α_ij measures attention spread.
-- Head importance: ablate head, measure performance drop.
-
 #### Implementation Steps (How)
-1. Modify transformer from Project 12 to return attention weights.
+1. Modify transformer from Project 12 to return attention weights (or use the
+   helper already in Project 15's notebook).
 2. Generate predictions on sample sentences; extract all layer/head attentions.
 3. Plot heatmaps: rows=queries, cols=keys, color=weight intensity.
-4. Aggregate across heads: average, max, or per-head analysis.
-5. Compute attention entropy per head/layer; correlate with task performance.
-
-#### Instrumentation & Evaluation
-- Attention heatmap grids (layer × head).
-- Entropy distributions: box plots per layer/head.
-- Token-level attention flow diagrams.
-- Attention rollout: cumulative attention across layers.
-
-#### Common Pitfalls & Debugging
-- Averaging attention across samples obscures patterns; visualize per-example.
-- Causal mask creates triangular patterns; don't mistake for learned behavior.
-- Attention weights ≠ importance: high attention doesn't always mean causal influence.
-- Over-interpreting single heads: behavior is emergent across all heads.
-
-#### FAQ
-- Q: Do all heads learn distinct patterns? A: Often yes, but redundancy exists; some heads are more critical than others.
-- Q: Why do models attend to delimiters (e.g., periods, CLS)? A: Aggregation points for sentence-level information.
-- Q: Can I prune heads? A: Yes—many heads can be removed with minimal performance loss (model compression strategy).
-- Q: How to know which heads matter for my task? A: Ablation studies: mask head, measure task performance drop.
-
-#### Extensions & Next Experiments
-- Head pruning: systematically remove heads and measure impact.
-- Attention intervention: manually set attention patterns, observe output changes.
-- Cross-lingual attention: analyze multilingual models' head behavior.
-- BERTology-style probing: which heads capture syntax, semantics, coreference?
+4. Compute attention entropy per head/layer; correlate with task performance.
 
 #### Alignment to Long-Term Goals
 When fine-tuning Qwen2.5, visualizing attention patterns reveals if the model attends to instruction cues properly; attention analysis aids debugging failure modes (e.g., ignoring constraints); understanding head specialization informs which layers to fine-tune (LoRA targeting).
@@ -481,6 +462,8 @@ Fine-tuning Qwen2.5 will feel like Projects 14-15 but simpler:
 - Projects 1-11: Gradient descent, algorithms, evaluation
 
 ### Phase 2: Transformers & Pretraining (4-6 weeks)
+- Project 12.1: Attention mechanisms (bridge, ~2-3 days)
+- Project 12.25: Embeddings from scratch (bridge, ~2-3 days)
 - Project 12: Build transformer from scratch
 - Project 13: Tokenization and text preprocessing
 - Project 14: Pretrain tiny model (this is the centerpiece)
@@ -496,22 +479,20 @@ This is not fast, but it builds genuine understanding layer by layer.
 
 ---
 
-## Concrete M4 Schedule Example
-
-If you committed ~20 hours/week:
+## Concrete Schedule Example (~20 hours/week)
 
 **Week 1-10**: Classical ML (Projects 1-11)
 - ~2 hours/week reading/learning
 - ~18 hours/week hands-on coding and experimentation
 
-**Week 11-14**: Transformers (Projects 12-13)
-- Week 11: Understand attention, implement from scratch
-- Week 12: Build full transformer
-- Week 13: Tokenization and data pipeline
-- Week 14: Start Project 14 pretraining runs
+**Week 11-12**: Bridge projects (12.1 attention, 12.25 embeddings)
+
+**Week 13-14**: Transformers (Projects 12-13)
+- Week 13: Build full transformer
+- Week 14: Tokenization and data pipeline
 
 **Week 15-16**: Pretraining (Project 14 intensive)
-- Day 1: Final setup and first run (4-12 hour training)
+- Day 1: Final setup and first run (hours of training)
 - Day 2: Analyze, run variants
 - Day 3: Run with different hyperparameters
 - Days 4-7: Analysis, experiments, write-up
@@ -530,7 +511,6 @@ If you committed ~20 hours/week:
 **Document Everything**: 
 - You're not just learning—you're conducting systematic research
 - Keep notebooks with outputs, observations, questions
-- Your WhisperEngine analysis skills apply here
 - Log loss curves, model outputs, findings
 
 **Instrument Heavily**:
@@ -576,9 +556,9 @@ If you committed ~20 hours/week:
 
 ---
 
-## Hardware Reality Check for M4
+## Hardware Reality Check
 
-Your setup handles all of this:
+Approximate resource use (Apple Silicon MLX path; CUDA numbers similar, CPU path slower):
 
 | Task | Time | Memory |
 |------|------|--------|
@@ -589,7 +569,7 @@ Your setup handles all of this:
 | Fine-tune Qwen2.5-1.5B-Instruct | Hours per run | ~4-6GB |
 | Analysis/inference | Minutes | ~15GB |
 
-You have headroom for everything. The longest single operation (Qwen2.5 fine-tuning) uses maybe 6GB at peak, leaving 34GB for OS and other processes.
+The longest single operation (Qwen2.5 fine-tuning) uses roughly 4-6GB at peak, leaving comfortable headroom on a 16GB+ machine.
 
 ---
 
@@ -599,24 +579,25 @@ You have headroom for everything. The longest single operation (Qwen2.5 fine-tun
    - Don't skip this
    - It's the foundation everything else builds on
    
-2. **Build the transformer** (Project 12)
+2. **Run the bridges first** (Projects 12.1, 12.25) — attention and embeddings in isolation.
+3. **Build the transformer** (Project 12)
    - Start small, understand each component
    - Implement attention deeply
 
-3. **Understand tokenization** (Project 13)
+4. **Understand tokenization** (Project 13)
    - Seems simple, actually subtle
    - Important for debugging later
 
-4. **Pretrain a tiny model** (Project 14)
+5. **Pretrain a tiny model** (Project 14)
    - This is where understanding crystallizes
    - Run multiple variants
    - Obsess over the loss curves and generated text
 
-5. **Do comparative analysis** (Project 15)
+6. **Do comparative analysis** (Project 15)
    - Rigorously compare pretrained vs random
    - Solidify why pretraining matters
 
-6. **Fine-tune Qwen2.5** (Projects 16-17)
+7. **Fine-tune Qwen2.5** (Projects 16-17)
    - Now it will be clear why this works
    - Apply your analysis skills
    - Connect to your research interests
@@ -625,8 +606,6 @@ You have headroom for everything. The longest single operation (Qwen2.5 fine-tun
 
 ## Final Note
 
-This is a substantial commitment, but the payoff is genuine mastery. You'll move from "Claude can do this" to "I understand how this works and can analyze it rigorously." That's a qualitatively different level of knowledge, especially valuable for your AI safety research.
+This is a substantial commitment, but the payoff is genuine mastery. You'll move from "Claude can do this" to "I understand how this works and can analyze it rigorously." That's a qualitatively different level of knowledge, especially valuable for AI safety research and serious engineering work.
 
 The pretraining section (Project 14) is the lynchpin—that's where classical ML understanding suddenly connects to LLMs. Everything before builds to it, everything after applies it.
-
-Your M4 gives you a real research workstation. Use it.

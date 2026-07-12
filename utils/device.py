@@ -84,7 +84,7 @@ def _detect_backend() -> BackendDetails:
     try:
         import torch  # type: ignore
         if torch.cuda.is_available():
-            return BackendDetails(Backend.TORCH_CUDA, f"cuda:{torch.cuda.current_device()}", extra=f"torch.version={torch.__version__}")
+            return BackendDetails(Backend.TORCH_CUDA, "cuda", extra=f"torch.version={torch.__version__}")
         if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
             return BackendDetails(Backend.TORCH_MPS, "mps", extra=f"torch.version={torch.__version__}")
         # Fallback CPU torch
@@ -107,16 +107,31 @@ def _materialize(backend: Backend) -> BackendDetails:
     if backend in (Backend.TORCH_CUDA, Backend.TORCH_MPS, Backend.CPU):
         try:
             import torch  # type: ignore
-            if backend == Backend.TORCH_CUDA and torch.cuda.is_available():
-                return BackendDetails(Backend.TORCH_CUDA, f"cuda:{torch.cuda.current_device()}", extra=f"torch.version={torch.__version__}")
-            if backend == Backend.TORCH_MPS and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-                return BackendDetails(Backend.TORCH_MPS, "mps", extra=f"torch.version={torch.__version__}")
+            if backend == Backend.TORCH_CUDA:
+                if torch.cuda.is_available():
+                    return BackendDetails(
+                        Backend.TORCH_CUDA, "cuda",
+                        extra=f"torch.version={torch.__version__}",
+                    )
+                import warnings
+                warnings.warn("LEARNING_ML_BACKEND=cuda set but no CUDA device is available — falling back to CPU")
+                return _materialize(Backend.CPU)
+            if backend == Backend.TORCH_MPS:
+                if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+                    return BackendDetails(
+                        Backend.TORCH_MPS, "mps",
+                        extra=f"torch.version={torch.__version__}",
+                    )
+                import warnings
+                warnings.warn("LEARNING_ML_BACKEND=mps set but MPS is not available — falling back to CPU")
+                return _materialize(Backend.CPU)
             if backend == Backend.CPU:
                 return BackendDetails(Backend.CPU, "cpu", extra=f"torch.version={torch.__version__}")
-        except Exception:
-            pass
-    # Final fallback
-    return BackendDetails(Backend.CPU, "cpu", extra="no torch/mlx")
+        except Exception as e:
+            import warnings
+            warnings.warn(f"Requested backend {backend.value} but torch import failed: {e} — falling back to CPU")
+    # Final fallback (no torch, no mlx, or unknown backend)
+    return BackendDetails(Backend.CPU, "cpu", extra="no torch/mlx available")
 
 
 def get_backend() -> Backend:
@@ -150,7 +165,14 @@ def _init_device(backend: Backend):
 
 
 def get_device():
-    """Return a device object / identifier suitable for tensor/model placement."""
+    """Return a device object / identifier suitable for tensor/model placement.
+
+    For MLX, returns the MLX device handle (or None if unavailable).
+    For torch backends, returns a ``torch.device`` instance with no index
+    suffix (``cuda``, ``mps``, or ``cpu``) — the ``device_repr`` from
+    ``backend_info()`` may show ``cuda:N`` for human readability but the
+    canonical handle is unindexed so ``.to(device)`` semantics stay portable.
+    """
     get_backend()  # Ensure initialized
     return __DEVICE
 
@@ -208,7 +230,7 @@ def move_to(obj):
     try:
         import torch  # type: ignore
         device = get_device()
-        if hasattr(obj, "to"):
+        if isinstance(obj, (torch.Tensor, torch.nn.Module)):
             return obj.to(device)
         return obj
     except Exception:
