@@ -242,7 +242,5 @@ def ensure_seed(seed: int = 42):
         except Exception:
             pass
 
-# Eager detection so early logs can use backend_info()
-_get = get_backend()
-if os.getenv("LEARNING_ML_VERBOSE"):
-    print(f"[device] {backend_info()}")
+# Eager detection intentionally removed — call get_backend() / backend_info()
+# explicitly when needed.  This avoids surprising stdout on import in tests.

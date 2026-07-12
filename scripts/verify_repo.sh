@@ -36,8 +36,8 @@ check_dir() {
 echo "Checking Documentation Files..."
 check_file "README.md"
 check_file "GETTING_STARTED_PLAN.md"
-check_file "PROGRESS_LOG.md"
-check_file "CODE_REVIEW.md"
+check_file "PROGRESS_LOG.md" || true  # optional per-user
+check_file "CODE_REVIEW.md" || true    # can be generated on demand
 check_file "CONTRIBUTING.md"
 check_file "LICENSE"
 

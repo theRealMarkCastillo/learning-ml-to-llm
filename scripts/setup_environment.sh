@@ -12,6 +12,16 @@ echo ""
 echo "Checking Python installation..."
 python3 --version
 
+# Require Python 3.8+
+PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+MIN_VERSION="3.8"
+if python3 -c "import sys; exit(0 if sys.version_info >= (3,8) else 1)" 2>/dev/null; then
+    echo "  Python $PYTHON_VERSION (OK, >= $MIN_VERSION)"
+else
+    echo "  ERROR: Python $MIN_VERSION+ required (found $PYTHON_VERSION)"
+    exit 1
+fi
+
 # Create virtual environment
 echo ""
 echo "Creating virtual environment..."
